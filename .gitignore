@@ -1,4 +1,7 @@
 # Logs
+.well-known/
+.htaccess
+cgi-bin/
 logs
 *.log
 npm-debug.log*
