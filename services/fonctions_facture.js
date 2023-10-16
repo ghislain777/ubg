@@ -5,6 +5,7 @@ const {
 const fonctionsFacture = {}
 let entreprise = require("./entreprise")
 const fonctionsDocument = require("./fonctions_document")
+const { NumberToLetter } = require("convertir-nombre-lettre");
 
 
 fonctionsFacture.genererDetailsfacture = (doc, facture) => {
@@ -141,7 +142,7 @@ fonctionsFacture.genererDetailsfacture = (doc, facture) => {
     
         rows: [
           ["Total", facture.soustotal.toLocaleString("ca-CA")],
-          ["Taxe", facture.taxe.toLocaleString("ca-CA")],
+          ["TVA(18%)", facture.taxe*1.18*facture.soustotal.toLocaleString("ca-CA")],
           ["Montant total", facture.montant.toLocaleString("ca-CA")+ ` ${entreprise.devise}`],
         ]
       }
@@ -164,6 +165,14 @@ fonctionsFacture.genererDetailsfacture = (doc, facture) => {
       });
     
       doc.moveDown()
+       // montant en lettre
+      
+   doc
+   .font("Helvetica").fontSize(10)
+   .text( "Ce présent document arrêté au montant de: ", 30)
+   .font("Helvetica-Bold").fontSize(10)
+   .text(NumberToLetter(facture.montant) +" "+ entreprise.devise)
+    doc.moveDown()
 }
 
 

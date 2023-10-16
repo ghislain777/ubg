@@ -367,6 +367,15 @@
                     "field": "contact",
                     "seqType": "Sequelize.STRING"
                 },
+                "adresse": {
+                    "allowNull": true,
+                    "defaultValue": {
+                        "value": ""
+                    },
+                    "comment": "Adresse",
+                    "field": "adresse",
+                    "seqType": "Sequelize.STRING"
+                },
                 "compte": {
                     "allowNull": true,
                     "defaultValue": {
@@ -1242,6 +1251,15 @@
                     "field": "contact",
                     "seqType": "Sequelize.STRING"
                 },
+                "adresse": {
+                    "allowNull": true,
+                    "defaultValue": {
+                        "value": ""
+                    },
+                    "comment": "Adresse",
+                    "field": "adresse",
+                    "seqType": "Sequelize.STRING"
+                },
                 "commune": {
                     "allowNull": false,
                     "name": "commune",
@@ -2041,6 +2059,59 @@
             },
             "indexes": []
         },
+        "payementfournisseur": {
+            "tableName": "payementfournisseur",
+            "schema": {
+                "id": {
+                    "autoIncrement": true,
+                    "primaryKey": true,
+                    "comment": "ID",
+                    "field": "id",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "datedepayement": {
+                    "allowNull": true,
+                    "defaultValue": {
+                        "internal": true,
+                        "value": "Sequelize.literal(\"CURRENT_TIMESTAMP\")"
+                    },
+                    "comment": "Date de payement",
+                    "field": "datedepayement",
+                    "seqType": "Sequelize.DATE"
+                },
+                "montant": {
+                    "allowNull": true,
+                    "defaultValue": {
+                        "value": 0
+                    },
+                    "comment": "Montant",
+                    "field": "montant",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "soldeapres": {
+                    "allowNull": true,
+                    "defaultValue": {
+                        "value": 0
+                    },
+                    "comment": "Solde après",
+                    "field": "soldeapres",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "facturefournisseur": {
+                    "allowNull": false,
+                    "name": "facturefournisseur",
+                    "field": "facturefournisseur",
+                    "references": {
+                        "model": "facturefournisseur",
+                        "key": "id"
+                    },
+                    "onDelete": "NO ACTION",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.INTEGER"
+                }
+            },
+            "indexes": []
+        },
         "privilege": {
             "tableName": "privilege",
             "schema": {
@@ -2228,7 +2299,10 @@
                     "seqType": "Sequelize.STRING"
                 },
                 "description": {
-                    "allowNull": false,
+                    "allowNull": true,
+                    "defaultValue": {
+                        "value": ""
+                    },
                     "comment": "Description",
                     "field": "description",
                     "seqType": "Sequelize.STRING"
@@ -2633,5 +2707,5 @@
     "path": "/home/ghislain/Documents/2023/1-PROJETS/LOGIAC/backend/migrations/_current.json",
     "backupPath": "/home/ghislain/Documents/2023/1-PROJETS/LOGIAC/backend/migrations/_current_bak.json",
     "exists": true,
-    "revision": 15
+    "revision": 16
 }

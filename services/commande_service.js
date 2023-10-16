@@ -1,6 +1,6 @@
 const fs = require("fs");
 const PDFDocument = require("pdfkit-table");
-const entreprise = require("./entreprise")
+let entreprise = require("./entreprise")
 const {Commande, Lignecommande, Stock, Mouvementdestock, Facture, Lignefacture} = require("../models")
 const commandeService = {}
 const {
@@ -11,6 +11,8 @@ const fonctionsCommande = require("./fonctions_commande");
 
 // Génération du fichier PDF d'une commande
 commandeService.genererCommande = (commande, res) => {
+  entreprise.typedeDocument = "Commande"
+  entreprise.prefixe = "CM"
   let doc = new PDFDocument({
     size: "A4",
     margin: 30

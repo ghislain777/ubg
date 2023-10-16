@@ -3,6 +3,7 @@ const fonctionsDocument = require("./fonctions_document")
 const {
     format
   } = require("date-fns");
+  const { NumberToLetter } = require("convertir-nombre-lettre");
 const fonctionsFacturefournisseur = {}
 fonctionsFacturefournisseur.genererDetailsfacture = (doc, facture) => {
 
@@ -162,6 +163,13 @@ fonctionsFacturefournisseur.genererDetailsfacture = (doc, facture) => {
       });
     
       doc.moveDown()
+           
+         doc
+         .font("Helvetica").fontSize(10)
+         .text( "Ce présent document arrêté au montant de: ", 30)
+         .font("Helvetica-Bold").fontSize(10)
+         .text(NumberToLetter(facture.montant) +" "+ entreprise.devise)
+          doc.moveDown()
 
 
 

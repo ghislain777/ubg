@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "admin",
+    "password": "ghislain",
+    "database": "logiac",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "root",
+    "password": "ghislain",
+    "database": "aliecard",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "logiac_admin",
+    "password": "JnoE12Fppdj^+LJ6",
+    "database": "logiac_admin",
+    "host": "localhost",
+    "dialect": "mysql"
+  } 
+}

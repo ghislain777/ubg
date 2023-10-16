@@ -1476,6 +1476,79 @@
             },
             "indexes": []
         },
+        "lignefacturefournisseur": {
+            "tableName": "lignefacturefournisseur",
+            "schema": {
+                "id": {
+                    "autoIncrement": true,
+                    "primaryKey": true,
+                    "comment": "ID",
+                    "field": "id",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "quantite": {
+                    "allowNull": true,
+                    "defaultValue": {
+                        "value": 0
+                    },
+                    "comment": "Quantité",
+                    "field": "quantite",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "prixunitaire": {
+                    "allowNull": true,
+                    "defaultValue": {
+                        "value": 0
+                    },
+                    "comment": "Prix unitaire",
+                    "field": "prixunitaire",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "prixtotal": {
+                    "allowNull": true,
+                    "defaultValue": {
+                        "value": 0
+                    },
+                    "comment": "Prix total",
+                    "field": "prixtotal",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "remise": {
+                    "allowNull": true,
+                    "defaultValue": {
+                        "value": 0
+                    },
+                    "comment": "Remise",
+                    "field": "remise",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "facturefournisseur": {
+                    "allowNull": false,
+                    "name": "facturefournisseur",
+                    "field": "facturefournisseur",
+                    "references": {
+                        "model": "facturefournisseur",
+                        "key": "id"
+                    },
+                    "onDelete": "NO ACTION",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "stock": {
+                    "allowNull": false,
+                    "name": "stock",
+                    "field": "stock",
+                    "references": {
+                        "model": "stock",
+                        "key": "id"
+                    },
+                    "onDelete": "NO ACTION",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.INTEGER"
+                }
+            },
+            "indexes": []
+        },
         "lignetransfert": {
             "tableName": "lignetransfert",
             "schema": {
@@ -2560,5 +2633,5 @@
     "path": "/home/ghislain/Documents/2023/1-PROJETS/LOGIAC/backend/migrations/_current.json",
     "backupPath": "/home/ghislain/Documents/2023/1-PROJETS/LOGIAC/backend/migrations/_current_bak.json",
     "exists": true,
-    "revision": 14
+    "revision": 15
 }

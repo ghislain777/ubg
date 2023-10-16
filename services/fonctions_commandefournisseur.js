@@ -2,6 +2,7 @@ const PDFDocument = require("pdfkit-table");
 let entreprise = require("./entreprise")
 const {Commandefournisseur, Lignecommandefournisseur, Stock, Mouvementdestock, Facture, Lignefacture} = require("../models");
 const fonctionsDocument = require("./fonctions_document");
+const { NumberToLetter } = require("convertir-nombre-lettre");
 const {
     format
   } = require("date-fns");
@@ -251,6 +252,13 @@ fonctionsCommandefournisseur.genererModalitesDePayement = (doc, commandefourniss
       },
     });
   
+    doc.moveDown()
+     // montant en lettre
+   doc
+   .font("Helvetica").fontSize(10)
+   .text( "Ce présent document arrêté au montant de: ", 30)
+   .font("Helvetica-Bold").fontSize(10)
+   .text(NumberToLetter(commandefournisseur.montant) +" "+ entreprise.devise)
     doc.moveDown()
   
     }

@@ -2,6 +2,7 @@ const PDFDocument = require("pdfkit-table");
 const entreprise = require("./entreprise")
 const {Commande, Lignecommande, Stock, Mouvementdestock, Facture, Lignefacture} = require("../models");
 const fonctionsDocument = require("./fonctions_document");
+const { NumberToLetter } = require("convertir-nombre-lettre");
 const {
     format
   } = require("date-fns");
@@ -89,11 +90,7 @@ fonctionsCommande.genererModalitesDePayement = (doc, commande) => {
     return date == null ? "" : format(date, "dd/MM/yyyy")
   }
 
-
-
-
-
-
+  // Détails de la commande
   fonctionsCommande.genererDetailsCommande = (doc, commande) => {
 
     let lignes = commande.Lignecommandes.map((ligne) => {
@@ -227,7 +224,7 @@ fonctionsCommande.genererModalitesDePayement = (doc, commande) => {
   
       rows: [
         ["Total", commande.soustotal.toLocaleString("ca-CA")],
-        ["Taxe", commande.taxe.toLocaleString("ca-CA")],
+        ["TVA(18%)", (commande.soustotal*0.18).toLocaleString("ca-CA")],
         ["Montant total", commande.montant.toLocaleString("ca-CA")+ ` ${entreprise.devise}`],
       ]
     }
@@ -250,9 +247,15 @@ fonctionsCommande.genererModalitesDePayement = (doc, commande) => {
     });
   
     doc.moveDown()
+    // montant en lettre
+   doc
+   .font("Helvetica").fontSize(10)
+   .text( "Ce présent document arrêté au montant de: ", 30)
+   .font("Helvetica-Bold").fontSize(10)
+   .text(NumberToLetter(commande.montant) +" "+ entreprise.devise)
+    doc.moveDown()
   
     }
-
 
 
   fonctionsCommande.genererPayementsAnterieurs = (doc, commande) => {
@@ -290,7 +293,6 @@ fonctionsCommande.genererModalitesDePayement = (doc, commande) => {
   
     }
 
- 
     fonctionsCommande.genererModalitesDePayement = (doc, commande) => {
 
         doc.fontSize(10).fillColor("#444444").text("Modalités de payement", 50)

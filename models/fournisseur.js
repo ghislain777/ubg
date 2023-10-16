@@ -111,6 +111,12 @@ module.exports = (sequelize, DataTypes) => {
               defaultValue: "",
               comment: 'Contact'
             },
+            adresse: {
+              type: DataTypes.STRING,
+              allowNull: true,
+              defaultValue: "",
+              comment: 'Adresse'
+            },
           
 
   }, {
