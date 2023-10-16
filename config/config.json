@@ -14,9 +14,9 @@
     "dialect": "mysql"
   },
   "production": {
-    "username": "logiac_admin",
+    "username": "admin_logiac",
     "password": "JnoE12Fppdj^+LJ6",
-    "database": "logiac_admin",
+    "database": "admin_logiac",
     "host": "localhost",
     "dialect": "mysql"
   } 
