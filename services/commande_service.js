@@ -51,7 +51,7 @@ await Mouvementdestock.create({
     stock: ligne.stock,
     motif:`Livraison des produits commande # ${commande.id}`,
     quantite: ligne.quantite,
-    typemouvement: "sortie"
+    typedemouvement: "sortie"
 }) 
 });
 }
