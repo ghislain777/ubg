@@ -4,7 +4,7 @@
     const { where } = require('sequelize');
     const { Sequelize, Op } = require('sequelize');
     const fonctions = require('../fonctions');
-    const {  Facturefournisseur, Stock, Produit, Media, Payementdournisseur, Lignefacturefournisseur, Modedepayement,Caissemagasin, Mouvementdecaisse, Payementfournisseur, Commandefournisseur, Fournisseur, Magasin  } = require('../models');
+    const {  Facturefournisseur, Mouvementdecomptefournisseur,  Stock, Produit, Media, Payementdournisseur, Lignefacturefournisseur, Modedepayement,Caissemagasin, Mouvementdecaisse, Payementfournisseur, Commandefournisseur, Fournisseur, Magasin  } = require('../models');
 const facturefournisseurService = require('../services/facturefournisseur_service');
     const facturefournisseurController = {}
     
@@ -133,7 +133,7 @@ const facturefournisseurService = require('../services/facturefournisseur_servic
           
             })
 
-            // on credite la caisse du magasin ayant fait la vente
+            // on debit la caisse du magasin ayant fait la vente
 
             const caisseMagasin = await  Caissemagasin.findOne({
               where:{
@@ -148,7 +148,7 @@ await Mouvementdecaisse.create({
     typedemouvement:"debit"
 })
 //on met à jour la facturefournisseur pour refleter le payement
-const lereste = facturefournisseur.resteapayer <= montantPaye ? {etat:"Fermé", statut:"Payée", payementcomplet:true} : {stat:"Partiellement payée"}
+const lereste = facturefournisseur.resteapayer <= montantPaye ? {etat:"Fermé", statut:"Payée", payementcomplet:true} : {statut:"Partiellement payée"}
 
 await Facturefournisseur.update({
     ...lereste,
@@ -157,6 +157,15 @@ await Facturefournisseur.update({
 }, {where:{
     id: facturefournisseur.id
 }})
+
+
+await Mouvementdecomptefournisseur.create({
+    fournisseur: facturefournisseur.fournisseur,
+    montant: montantPaye,
+    motif:`Payement facture fournisseur # ${facturefournisseur.id}`,
+    typedemouvement:"debit"
+})
+
    res.send(response)
         } catch (err) {
             res.status(500).send(err.stack)

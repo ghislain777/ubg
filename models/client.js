@@ -122,7 +122,7 @@ module.exports = (sequelize, DataTypes) => {
               type: DataTypes.INTEGER,
               allowNull: true,
               defaultValue: 0,
-              comment: 'Compte?? ""'
+              comment: 'Compte'
             },
           
 

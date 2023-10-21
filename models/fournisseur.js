@@ -117,7 +117,12 @@ module.exports = (sequelize, DataTypes) => {
               defaultValue: "",
               comment: 'Adresse'
             },
-          
+            compte: {
+              type: DataTypes.INTEGER,
+              allowNull: true,
+              defaultValue: 0,
+              comment: 'Compte'
+            }, 
 
   }, {
     sequelize,

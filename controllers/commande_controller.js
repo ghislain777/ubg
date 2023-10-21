@@ -313,4 +313,22 @@ commandeController.imprimer = async (req, res) => {
 commandeService.genererCommande(commande, res)
 }
 
+
+
+// Génération du bon de livraison pour une commande.
+commandeController.genererBondelivraison = async (req, res) => {
+    const commande = await Commande.findOne({
+        where:{
+            id: req.params.id
+        },
+        include: [
+            Client, Lignecommande,Magasin, Client,
+            {model:Lignecommande, include:[{model:Stock, include:[Produit]}]}
+        ]
+    })
+
+commandeService.genereBondelivraison(commande, res)
+
+
+}
 module.exports = commandeController

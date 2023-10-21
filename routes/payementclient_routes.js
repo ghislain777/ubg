@@ -6,5 +6,6 @@ payementclientRoutes.post('/', async (req, res) =>  payementclientController.add
 payementclientRoutes.put('/:id', async (req, res) =>  payementclientController.update(req, res))
 payementclientRoutes.delete('/:id', async (req, res) =>  payementclientController.delete(req, res))
 payementclientRoutes.get('/:id', async (req, res) =>  payementclientController.getById(req, res))
+payementclientRoutes.get('/recudepayement/:id', async (req, res) =>  payementclientController.recudepayement(req, res))
 payementclientRoutes.post('/getby', async (req, res) =>  payementclientController.getBy(req, res))
 module.exports = payementclientRoutes

@@ -4,7 +4,7 @@
     const { where } = require('sequelize');
     const { Sequelize, Op } = require('sequelize');
     const fonctions = require('../fonctions');
-    const {  Fournisseur, Commune  } = require('../models');
+    const {  Fournisseur, Commune, Mouvementdecomptefournisseur  } = require('../models');
     const fournisseurController = {}
     
  fournisseurController.includeFournisseur = [
@@ -117,6 +117,26 @@
         } catch (err) {
             res.status(500).send(err.message)
         }
+    }
+
+
+    fournisseurController.mouvementdecompte = async (req, res) => {
+
+        try {
+            const {typedemouvement, montant, motif} = req.body   
+        const   response = await Mouvementdecomptefournisseur.create({
+                typedemouvement: typedemouvement,
+                motif:motif,
+                montant:montant,
+                fournisseur:req.params.id
+            })
+            res.send(response)
+        } catch (error) {
+             console.log(error, error.stack.split("\n"))
+                res.status(500).send(error.stack.split("\n"))        
+        }
+            
+
     }
 
     

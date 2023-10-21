@@ -4,7 +4,7 @@ const zfonctions = require('./zfonctions');
 
 
 const repertoireModel = "../models"
-const table = 'payementfournisseur'
+const table = 'mouvementdecomptefournisseur'
 
 //const clesEtrangeres = ['${nom}']
 sequelize.query(`SHOW FULL COLUMNS FROM ${table}`, { type: QueryTypes.SELECT }).then(colones=> {

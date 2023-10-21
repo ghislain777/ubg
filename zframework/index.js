@@ -12,17 +12,17 @@ const getContenuFichierFormulaireImage = require('./fichierFormulaireImage')
 const getContenuFichierFormulairePourImage = require('./fichierFormulairePourImage')
 
 //** debut du parametrage */
-const { Payementfournisseur } = require('../models')
-let latable = "payementfournisseur"
+const { Mouvementdecompteclient } = require('../models')
+let latable = "mouvementdecompteclient"
 const champImageExiste = false
 
 let lien = {
-    menu:"achats",
-    activite: "payementsfournisseur"
+    menu:"ventes",
+    activite: "mouvementdecompteclients"
 }
 const boutonNouveau = "Nouveau"
 let page = {
-    titreListe: "Payments fournisseurs",
+    titreListe: "Mouvements sur les comptes clients",
     titreFormulaireAjout: boutonNouveau,
     titreFormulaireMisajour: "Mise à jour",
     boutonNouveau: boutonNouveau,
@@ -30,7 +30,7 @@ let page = {
 }
 //** fin du parametrage */
 
-const tab = Payementfournisseur.rawAttributes
+const tab = Mouvementdecompteclient.rawAttributes
 let table = {
     nom: latable,
     model: latable.replace(/^./, latable[0].toUpperCase()),
@@ -39,7 +39,7 @@ let table = {
 }
 let champsPhotos = []
 let champsDocuments = []
-let champsStatuts = ["statut"]
+let champsStatuts = ["statut", 'typedemouvement']
 
 
 

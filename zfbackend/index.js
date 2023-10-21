@@ -8,10 +8,10 @@ var fs = require("fs")
 
 //** debut du parametrage */
 const {
-    Payementfournisseur
+    Mouvementdecomptefournisseur
 } = require('../models')
-let latable = "payementfournisseur"
-const tab = Payementfournisseur.rawAttributes
+let latable = "mouvementdecomptefournisseur"
+const tab = Mouvementdecomptefournisseur.rawAttributes
 let table = {
     nom: latable,
     model: latable.replace(/^./, latable[0].toUpperCase()),

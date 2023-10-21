@@ -67,4 +67,6 @@ fonctionsDocument.generateHr = (doc, y) => {
       );
   }
   
+
+
 module.exports = fonctionsDocument

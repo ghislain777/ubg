@@ -7,6 +7,7 @@ commandeRoutes.put('/:id', async (req, res) =>  commandeController.update(req, r
 commandeRoutes.delete('/:id', async (req, res) =>  commandeController.delete(req, res))
 commandeRoutes.get('/:id', async (req, res) =>  commandeController.getById(req, res))
 commandeRoutes.get('/imprimer/:id', async (req, res) =>  commandeController.imprimer(req, res))
+commandeRoutes.get('/bondelivraison/:id', async (req, res) =>  commandeController.genererBondelivraison(req, res))
 commandeRoutes.put('/statut/:id', async (req, res) =>  commandeController.updateStatut(req, res))
 commandeRoutes.post('/getby', async (req, res) =>  commandeController.getBy(req, res))
 module.exports = commandeRoutes

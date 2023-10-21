@@ -141,9 +141,9 @@ fonctionsFacture.genererDetailsfacture = (doc, facture) => {
         }],
     
         rows: [
-          ["Total", facture.soustotal.toLocaleString("ca-CA")],
-          ["TVA(18%)", facture.taxe*1.18*facture.soustotal.toLocaleString("ca-CA")],
-          ["Montant total", facture.montant.toLocaleString("ca-CA")+ ` ${entreprise.devise}`],
+          ["Total TTC", facture.soustotal.toLocaleString("ca-CA")],
+          ["TVA(18%)", 18/100*facture.soustotal.toFixed(2).toLocaleString("ca-CA")],
+          ["Montant HT", (facture.montant - 18/100*facture.soustotal).toLocaleString("ca-CA")+ ` ${entreprise.devise}`],
         ]
       }
       doc.text('', 570 - 250)

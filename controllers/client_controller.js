@@ -4,7 +4,7 @@
     const { where } = require('sequelize');
     const { Sequelize, Op } = require('sequelize');
     const fonctions = require('../fonctions');
-    const {  Client, Commune  } = require('../models');
+    const {  Client, Commune, Mouvementdecompteclient  } = require('../models');
     const clientController = {}
     
  clientController.includeClient = [
@@ -117,6 +117,26 @@
         } catch (err) {
             res.status(500).send(err.message)
         }
+    }
+
+    clientController.mouvementdecompte = async (req, res) => {
+
+
+        try {
+            const {typedemouvement, montant, motif} = req.body   
+        const   response = await Mouvementdecompteclient.create({
+                typedemouvement: typedemouvement,
+                motif:motif,
+                montant:montant,
+                client:req.params.id
+            })
+            res.send(response)
+        } catch (error) {
+             console.log(error, error.stack.split("\n"))
+                res.status(500).send(error.stack.split("\n"))        
+        }
+            
+
     }
 
     

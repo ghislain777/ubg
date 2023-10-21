@@ -4,7 +4,7 @@
     const { where } = require('sequelize');
     const { Sequelize, Op } = require('sequelize');
     const fonctions = require('../fonctions');
-    const { Mouvementdecaisse, Caissemagasin, Facture, Magasin, Commande, Modedepayement, Client, Payementclient, Lignefacture, Stock, Produit, Media } = require('../models');
+    const { Mouvementdecaisse, Caissemagasin, Mouvementdecompteclient, Facture, Magasin, Commande, Modedepayement, Client, Payementclient, Lignefacture, Stock, Produit, Media } = require('../models');
 const factureService = require('../services/facture_service');
     const factureController = {}
     
@@ -122,8 +122,9 @@ const factureService = require('../services/facture_service');
         }
     }
 
-    factureController.payerFacture = async (req, res) => {
+    // Payement de la facture par le client....
 
+    factureController.payerFacture = async (req, res) => {
         const facture = await Facture.findByPk(req.params.id)
         const montantPaye = +req.body.montant
         try {
@@ -140,8 +141,8 @@ const factureService = require('../services/facture_service');
             const caisseMagasin = await  Caissemagasin.findOne({
               where:{
                  magasin:facture.magasin
-    }
-})
+                         }
+                    })
 
 await Mouvementdecaisse.create({
     caissemagasin:caisseMagasin.id,
@@ -150,13 +151,23 @@ await Mouvementdecaisse.create({
     typedemouvement:"credit"
 })
 //on met à jour la facture pour refleter le payement
-
 await Facture.update({
     resteapayer:facture.resteapayer - montantPaye,
-    montantpaye: facture.montantpaye + montantPaye
+    montantpaye: facture.montantpaye + montantPaye,
+    statut:facture.resteapayer <= montantPaye? "Payée": "Partiellement payée"
 }, {where:{
     id: facture.id
 }})
+
+// on credite le compte du client pour refleter ce payement
+await Mouvementdecompteclient.create({
+    client: facture.client,
+    montant:montantPaye,
+    motif: `Payement pour la facture ${facture.id}`,
+    typedemouvement:"credit"
+})
+
+
    res.send(response)
         } catch (err) {
             res.status(500).send(err.message)

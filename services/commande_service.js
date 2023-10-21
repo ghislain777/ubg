@@ -1,13 +1,14 @@
 const fs = require("fs");
 const PDFDocument = require("pdfkit-table");
 let entreprise = require("./entreprise")
-const {Commande, Lignecommande, Stock, Mouvementdestock, Facture, Lignefacture} = require("../models")
+const {Commande, Lignecommande, Mouvementdecompteclient, Stock, Mouvementdestock, Facture, Lignefacture} = require("../models")
 const commandeService = {}
 const {
   format
 } = require("date-fns");
 const fonctionsDocument = require("./fonctions_document");
 const fonctionsCommande = require("./fonctions_commande");
+const fonctionsBondelivraison = require("./fonctions_bondelivraison");
 
 // Génération du fichier PDF d'une commande
 commandeService.genererCommande = (commande, res) => {
@@ -54,7 +55,9 @@ await Mouvementdestock.create({
 }) 
 });
 }
-// création d'une facture à partir de la commande
+
+
+// création d'une facture à partir de la commande et debit di compte client....
 commandeService.facturer = async (commande) => {
   const ligneCommandes = await Lignecommande.findAll({
     where:{
@@ -88,6 +91,37 @@ ligneCommandes.forEach( async ligne => {
     facture:facture.id
   })
 });
+
+await Mouvementdecompteclient.create({
+  client: commande.client,
+  montant:commande.montant,
+  typedemouvement:"debit",
+  motif:`facturation de la commande ${commande.id}`
+
+})
+
+ 
+
+}
+
+commandeService.genereBondelivraison = (commande, res) => {
+
+  entreprise.typedeDocument = "Bon de livraison"
+  entreprise.prefixe = "BL"
+  let doc = new PDFDocument({
+    size: "A4",
+    margin: 30,
+  });
+
+  fonctionsDocument.genererEntete(doc)
+  fonctionsDocument.generateHr(doc, 90)
+  fonctionsBondelivraison.genererinfosClients(doc, commande);
+  fonctionsBondelivraison.genererDetailsBondecommande(doc, commande)
+  fonctionsDocument.genererPiedDePage(doc);
+  doc.pipe(res)
+  doc.end();
+  // doc.pipe(fs.createWriteStream(`public/fichiers/commandes/test.pdf`));
+
 
 }
 

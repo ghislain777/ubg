@@ -223,9 +223,9 @@ fonctionsCommande.genererModalitesDePayement = (doc, commande) => {
       }],
   
       rows: [
-        ["Total", commande.soustotal.toLocaleString("ca-CA")],
+        ["Total TTC", commande.soustotal.toLocaleString("ca-CA")],
         ["TVA(18%)", (commande.soustotal*0.18).toLocaleString("ca-CA")],
-        ["Montant total", commande.montant.toLocaleString("ca-CA")+ ` ${entreprise.devise}`],
+        ["Montant HT", (commande.montant - commande.soustotal*0.18).toLocaleString("ca-CA")+ ` ${entreprise.devise}`],
       ]
     }
     doc.text('', 570 - 250)

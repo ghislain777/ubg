@@ -1,14 +1,18 @@
 
 
+const {
+    format
+  } = require("date-fns");
     const { response, request } = require('express');
     const { where } = require('sequelize');
     const { Sequelize, Op } = require('sequelize');
     const fonctions = require('../fonctions');
-    const {  Payementclient, Facture  } = require('../models');
+    const {  Payementclient, Facture,Client  } = require('../models');
+const payementService = require('../services/payement_service');
     const payementclientController = {}
     
  payementclientController.includePayementclient = [
-    Facture,]
+    {model:Facture, include:[Client]},]
  payementclientController.add = async (req, res) => {
         try {
             const response = await Payementclient.create(req.body)
@@ -119,5 +123,15 @@
         }
     }
 
-    
+
+    payementclientController.recudepayement = async (req, res) => {
+        const payementclient = await Payementclient.findOne({
+            where: { id: req.params.id },
+            include: [
+                {model:Facture, include:[Client]}
+            ]
+        })
+        payementService.genererRecu(payementclient, res)
+    }
+
     module.exports = payementclientController

@@ -5,6 +5,7 @@ facturefournisseurRoutes.get('/', async (req, res) =>  facturefournisseurControl
 facturefournisseurRoutes.post('/', async (req, res) =>  facturefournisseurController.add(req, res))
 facturefournisseurRoutes.put('/payer/:id', async (req, res) =>  facturefournisseurController.payer(req, res))
 facturefournisseurRoutes.put('/:id', async (req, res) =>  facturefournisseurController.update(req, res))
+
 facturefournisseurRoutes.delete('/:id', async (req, res) =>  facturefournisseurController.delete(req, res))
 facturefournisseurRoutes.get('/:id', async (req, res) =>  facturefournisseurController.getById(req, res))
 facturefournisseurRoutes.get('/imprimer/:id', async (req, res) =>  facturefournisseurController.imprimer(req, res))

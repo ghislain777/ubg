@@ -1,7 +1,7 @@
 const fs = require("fs");
 const PDFDocument = require("pdfkit-table");
 const entreprise = require("./entreprise")
-const {Commandefournisseur, Lignecommandefournisseur, Stock, Mouvementdestock, Facturefournisseur, Lignefacturefournisseur} = require("../models")
+const {Commandefournisseur, Mouvementdecomptefournisseur, Lignecommandefournisseur, Stock, Mouvementdestock, Facturefournisseur, Lignefacturefournisseur} = require("../models")
 const commandefournisseurService = {}
 const {
   format
@@ -86,6 +86,15 @@ ligneCommandefournisseurs.forEach( async ligne => {
     facturefournisseur:facture.id
   })
 });
+
+//TODO on crédite le compte du fournisseur à la facturation
+
+await Mouvementdecomptefournisseur.create({
+  fournisseur:commandefournisseur.fournisseur,
+  montant: commandefournisseur.montant,
+  motif:`facturation fournisseur #${commandefournisseur.id}`,
+  typedemouvement:"credit"
+})
 
 }
 
