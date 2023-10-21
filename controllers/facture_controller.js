@@ -154,7 +154,8 @@ await Mouvementdecaisse.create({
 await Facture.update({
     resteapayer:facture.resteapayer - montantPaye,
     montantpaye: facture.montantpaye + montantPaye,
-    statut:facture.resteapayer <= montantPaye? "Payée": "Partiellement payée"
+    statut:facture.resteapayer <= montantPaye? "Payée": "Partiellement payée",
+    etat:facture.resteapayer <= montantPaye? "Fermé": "Ouvert"
 }, {where:{
     id: facture.id
 }})
