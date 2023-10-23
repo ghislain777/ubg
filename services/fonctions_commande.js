@@ -40,7 +40,7 @@ fonctionsCommande.genererInfosClient = (doc, commande) => {
     .text(`${commande.Client?.nom?? ""} ${commande.Client?.prenom?? ""}`, 350, customerInformationTop)
     .font("Helvetica")
     .text(commande.Client?.telephone ?? "", 350, customerInformationTop + 15)
-    .text(`${commande.Client?.email ?? ""}\n ${commande.Client?.adresseligne ?? ""}`,350,customerInformationTop + 30
+    .text(`${commande.Client?.email ?? ""}\n ${commande.Client?.adresse ?? ""}`,350,customerInformationTop + 30
     )
     .moveDown();
   
@@ -223,9 +223,10 @@ fonctionsCommande.genererModalitesDePayement = (doc, commande) => {
       }],
   
       rows: [
-        ["Total TTC", commande.soustotal.toLocaleString("ca-CA")],
-        ["TVA(18%)", (commande.soustotal*0.18).toLocaleString("ca-CA")],
         ["Montant HT", (commande.montant - commande.soustotal*0.18).toLocaleString("ca-CA")+ ` ${entreprise.devise}`],
+        ["TVA(18%)", (commande.soustotal*0.18).toLocaleString("ca-CA")],
+        ["Total TTC", commande.soustotal.toLocaleString("ca-CA")],
+
       ]
     }
     doc.text('', 570 - 250)

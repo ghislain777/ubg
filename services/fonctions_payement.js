@@ -101,7 +101,7 @@ fonctionsPayement.genererDetailsRecu = (doc, payementclient) => {
   doc
     .font("Helvetica")
     .fontSize(10)
-    .text('Indormations sur le payement', 30, 250)
+    .text('Informations sur le payement', 30, 250)
   doc.moveDown()
   doc.table(latable, {
  //   columnsSize:  entreprise.afficherPhotos == true? [50, 190, 75, 200] : [0, 190+60, 95, 180]  ,

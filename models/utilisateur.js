@@ -83,7 +83,7 @@ module.exports = (sequelize, DataTypes) => {
     civilite: {
       type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: '',
+      defaultValue: 'M.',
       comment: 'Civilite'
     },
     telephone: {

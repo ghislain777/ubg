@@ -141,9 +141,9 @@ fonctionsFacture.genererDetailsfacture = (doc, facture) => {
         }],
     
         rows: [
-          ["Total TTC", facture.soustotal.toLocaleString("ca-CA")],
-          ["TVA(18%)", 18/100*facture.soustotal.toFixed(2).toLocaleString("ca-CA")],
           ["Montant HT", (facture.montant - 18/100*facture.soustotal).toLocaleString("ca-CA")+ ` ${entreprise.devise}`],
+          ["TVA(18%)", 18/100*facture.soustotal.toFixed(2).toLocaleString("ca-CA")],
+          ["Total TTC", facture.soustotal.toLocaleString("ca-CA")],
         ]
       }
       doc.text('', 570 - 250)
@@ -207,7 +207,7 @@ fonctionsFacture.genererInfosClient = (doc, facture) => {
   .text(`${facture.Client?.nom?? ""} ${facture.Client?.prenom?? ""}`, 350, customerInformationTop)
   .font("Helvetica")
   .text(facture.Client?.telephone ?? "", 350, customerInformationTop + 15)
-  .text(`${facture.Client?.email ?? ""}\n ${facture.Client?.adresseligne ?? ""}`,350,customerInformationTop + 30
+  .text(`${facture.Client?.email ?? ""}\n ${facture.Client?.adresse ?? ""}`,350,customerInformationTop + 30
   )
   .moveDown();
   fonctionsDocument.generateHr(doc, customerInformationTop+52);
