@@ -50,6 +50,12 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: '',
       comment: 'Telephone'
     },
+    peutvendre: {
+          type:DataTypes.STRING,
+          allowNull:true,
+          defaultValue: true,
+          comment: "Peut vendre?"
+        },
 
   }, {
     sequelize,
