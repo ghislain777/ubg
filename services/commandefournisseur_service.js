@@ -46,9 +46,9 @@ const ligneCommandefournisseurs = await Lignecommandefournisseur.findAll({
 ligneCommandefournisseurs.forEach(async (ligne) => {
 await Mouvementdestock.create({
     stock: ligne.stock,
-    motif:`Livraison des produits commandefournisseur # ${commandefournisseur.id}`,
+    motif:`Livraison des produits commande fournisseur #: ${commandefournisseur.id}`,
     quantite: ligne.quantite,
-    typemouvement: "sortie"
+    typemouvement: "entree"
 }) 
 });
 }

@@ -381,7 +381,7 @@
                     "defaultValue": {
                         "value": 0
                     },
-                    "comment": "Compte?? \"\"",
+                    "comment": "Compte",
                     "field": "compte",
                     "seqType": "Sequelize.INTEGER"
                 },
@@ -1260,6 +1260,15 @@
                     "field": "adresse",
                     "seqType": "Sequelize.STRING"
                 },
+                "compte": {
+                    "allowNull": true,
+                    "defaultValue": {
+                        "value": 0
+                    },
+                    "comment": "Compte",
+                    "field": "compte",
+                    "seqType": "Sequelize.INTEGER"
+                },
                 "commune": {
                     "allowNull": false,
                     "name": "commune",
@@ -1877,6 +1886,148 @@
                     "field": "caissemagasin",
                     "references": {
                         "model": "caissemagasin",
+                        "key": "id"
+                    },
+                    "onDelete": "NO ACTION",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.INTEGER"
+                }
+            },
+            "indexes": []
+        },
+        "mouvementdecompteclient": {
+            "tableName": "mouvementdecompteclient",
+            "schema": {
+                "id": {
+                    "autoIncrement": true,
+                    "primaryKey": true,
+                    "comment": "ID",
+                    "field": "id",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "motif": {
+                    "allowNull": true,
+                    "defaultValue": {
+                        "value": ""
+                    },
+                    "comment": "",
+                    "field": "motif",
+                    "seqType": "Sequelize.STRING"
+                },
+                "montant": {
+                    "allowNull": true,
+                    "defaultValue": {
+                        "value": 0
+                    },
+                    "comment": "Montant",
+                    "field": "montant",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "soldeapres": {
+                    "allowNull": true,
+                    "defaultValue": {
+                        "value": 0
+                    },
+                    "comment": "Solde après",
+                    "field": "soldeapres",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "datemouvement": {
+                    "allowNull": true,
+                    "defaultValue": {
+                        "internal": true,
+                        "value": "Sequelize.literal(\"CURRENT_TIMESTAMP\")"
+                    },
+                    "comment": "Date du mouvement",
+                    "field": "datemouvement",
+                    "seqType": "Sequelize.DATE"
+                },
+                "typedemouvement": {
+                    "allowNull": true,
+                    "defaultValue": {
+                        "value": ""
+                    },
+                    "comment": "Type de mouvement",
+                    "field": "typedemouvement",
+                    "seqType": "Sequelize.STRING"
+                },
+                "client": {
+                    "allowNull": false,
+                    "name": "client",
+                    "field": "client",
+                    "references": {
+                        "model": "client",
+                        "key": "id"
+                    },
+                    "onDelete": "NO ACTION",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.INTEGER"
+                }
+            },
+            "indexes": []
+        },
+        "mouvementdecomptefournisseur": {
+            "tableName": "mouvementdecomptefournisseur",
+            "schema": {
+                "id": {
+                    "autoIncrement": true,
+                    "primaryKey": true,
+                    "comment": "ID",
+                    "field": "id",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "motif": {
+                    "allowNull": true,
+                    "defaultValue": {
+                        "value": ""
+                    },
+                    "comment": "",
+                    "field": "motif",
+                    "seqType": "Sequelize.STRING"
+                },
+                "datemouvement": {
+                    "allowNull": true,
+                    "defaultValue": {
+                        "internal": true,
+                        "value": "Sequelize.literal(\"CURRENT_TIMESTAMP\")"
+                    },
+                    "comment": "Date du mouvement",
+                    "field": "datemouvement",
+                    "seqType": "Sequelize.DATE"
+                },
+                "montant": {
+                    "allowNull": true,
+                    "defaultValue": {
+                        "value": 0
+                    },
+                    "comment": "Montant",
+                    "field": "montant",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "typedemouvement": {
+                    "allowNull": true,
+                    "defaultValue": {
+                        "value": ""
+                    },
+                    "comment": "Type de mouvement",
+                    "field": "typedemouvement",
+                    "seqType": "Sequelize.STRING"
+                },
+                "soldeapres": {
+                    "allowNull": true,
+                    "defaultValue": {
+                        "value": 0
+                    },
+                    "comment": "Solde après",
+                    "field": "soldeapres",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "fournisseur": {
+                    "allowNull": false,
+                    "name": "fournisseur",
+                    "field": "fournisseur",
+                    "references": {
+                        "model": "fournisseur",
                         "key": "id"
                     },
                     "onDelete": "NO ACTION",
@@ -2707,5 +2858,5 @@
     "path": "/home/ghislain/Documents/2023/1-PROJETS/LOGIAC/backend/migrations/_current.json",
     "backupPath": "/home/ghislain/Documents/2023/1-PROJETS/LOGIAC/backend/migrations/_current_bak.json",
     "exists": true,
-    "revision": 16
+    "revision": 17
 }

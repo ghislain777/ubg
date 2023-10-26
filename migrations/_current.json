@@ -1659,6 +1659,15 @@
                     "field": "telephone",
                     "seqType": "Sequelize.STRING"
                 },
+                "peutvendre": {
+                    "allowNull": true,
+                    "defaultValue": {
+                        "value": true
+                    },
+                    "comment": "Peut vendre?",
+                    "field": "peutvendre",
+                    "seqType": "Sequelize.STRING"
+                },
                 "commune": {
                     "allowNull": false,
                     "name": "commune",
@@ -2763,7 +2772,7 @@
                 "civilite": {
                     "allowNull": false,
                     "defaultValue": {
-                        "value": ""
+                        "value": "M."
                     },
                     "comment": "Civilite",
                     "field": "civilite",
@@ -2858,5 +2867,5 @@
     "path": "/home/ghislain/Documents/2023/1-PROJETS/LOGIAC/backend/migrations/_current.json",
     "backupPath": "/home/ghislain/Documents/2023/1-PROJETS/LOGIAC/backend/migrations/_current_bak.json",
     "exists": true,
-    "revision": 17
+    "revision": 18
 }
