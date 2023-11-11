@@ -1,7 +1,7 @@
 const fs = require("fs");
 const PDFDocument = require("pdfkit-table");
 let entreprise = require("./entreprise")
-const {Commande, Lignecommande, Mouvementdecompteclient, Stock, Mouvementdestock, Facture, Lignefacture} = require("../models")
+const {Commande, Lignecommande,Produit, Mouvementdecompteclient, Stock, Mouvementdestock, Facture, Lignefacture} = require("../models")
 const commandeService = {}
 const {
   format
@@ -37,7 +37,7 @@ commandeService.genererCommande = (commande, res) => {
   // doc.pipe(fs.createWriteStream(`public/fichiers/commandes/test.pdf`));
 }
 
-// Livraison d'une commande (destockage de tous les produits de la commande)
+// *****Livraison d'une commande (destockage de tous les produits de la commande)
 commandeService.livrer = async (commande) => {
 const ligneCommandes = await Lignecommande.findAll({
     where:{
@@ -47,10 +47,43 @@ const ligneCommandes = await Lignecommande.findAll({
 })
 
 ligneCommandes.forEach(async (ligne) => {
+const lestock = await Stock.findOne({
+  where:{
+    id: ligne.stock
+  },
+  include:[
+    {model:Produit, inclide:["Origine"]}
+  ]
+})
+
+
+var stockADebiter = lestock
+var quantiteADebiter = ligne.quantite
+
+
+if(lestock.Produit.produitdorigine != null) { // le produit est un produit detaché
+
+  stockADebiter = await Stock.findOne(
+    {
+      where:{
+        produit: lestock.Produit.produitdorigine,
+        magasin: lestock.magasin
+
+      }
+    }
+  )
+  quantiteADebiter = ligne.quantiteorigine
+
+
+}
+
+console.log("produit à debiter")
+console.log(lestock)
+
 await Mouvementdestock.create({
-    stock: ligne.stock,
+    stock: stockADebiter.id,
     motif:`Livraison des produits commande # ${commande.id}`,
-    quantite: ligne.quantite,
+    quantite: quantiteADebiter,
     typedemouvement: "sortie"
 }) 
 });

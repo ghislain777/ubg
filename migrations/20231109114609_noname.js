@@ -3,15 +3,14 @@ const Sequelize = require("sequelize");
 /**
  * Actions summary:
  *
- * addColumn(peutvendre) => "magasin"
- * changeColumn(civilite) => "utilisateur"
+ * addColumn(magasin) => "client"
  *
  */
 
 const info = {
-  revision: 18,
+  revision: 22,
   name: "noname",
-  created: "2023-10-25T12:52:04.250Z",
+  created: "2023-11-09T11:46:09.577Z",
   comment: "",
 };
 
@@ -19,29 +18,16 @@ const migrationCommands = (transaction) => [
   {
     fn: "addColumn",
     params: [
+      "client",
       "magasin",
-      "peutvendre",
       {
-        type: Sequelize.STRING,
-        field: "peutvendre",
-        comment: "Peut vendre?",
-        defaultValue: true,
+        type: Sequelize.INTEGER,
+        onUpdate: "CASCADE",
+        onDelete: "SET NULL",
+        references: { model: "magasin", key: "id" },
+        field: "magasin",
+        name: "magasin",
         allowNull: true,
-      },
-      { transaction },
-    ],
-  },
-  {
-    fn: "changeColumn",
-    params: [
-      "utilisateur",
-      "civilite",
-      {
-        type: Sequelize.STRING,
-        field: "civilite",
-        comment: "Civilite",
-        defaultValue: "M.",
-        allowNull: false,
       },
       { transaction },
     ],
@@ -51,22 +37,7 @@ const migrationCommands = (transaction) => [
 const rollbackCommands = (transaction) => [
   {
     fn: "removeColumn",
-    params: ["magasin", "peutvendre", { transaction }],
-  },
-  {
-    fn: "changeColumn",
-    params: [
-      "utilisateur",
-      "civilite",
-      {
-        type: Sequelize.STRING,
-        field: "civilite",
-        comment: "Civilite",
-        defaultValue: "",
-        allowNull: false,
-      },
-      { transaction },
-    ],
+    params: ["client", "magasin", { transaction }],
   },
 ];
 

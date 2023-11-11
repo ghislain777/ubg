@@ -4,11 +4,11 @@
     const { where } = require('sequelize');
     const { Sequelize, Op } = require('sequelize');
     const fonctions = require('../fonctions');
-    const {  Client, Commune, Mouvementdecompteclient  } = require('../models');
+    const {  Client, Commune, Mouvementdecompteclient, Magasin  } = require('../models');
     const clientController = {}
     
  clientController.includeClient = [
-    Commune,]
+    Commune,Magasin]
  clientController.add = async (req, res) => {
         try {
             const response = await Client.create(req.body)

@@ -77,6 +77,11 @@ module.exports = (sequelize, DataTypes) => {
               defaultValue: 0,
               comment: 'Remise?? ""'
             },
+            quantiteorigine: {
+                  type:DataTypes.FLOAT,
+                  allowNull:true,
+                  comment: "Quantite produit origine"
+                },
           
 
   }, {

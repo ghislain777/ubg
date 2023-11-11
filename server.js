@@ -36,6 +36,9 @@ const payementfournisseurRoutes = require('./routes/payementfournisseur_routes.j
 const mouvementdecompteclientRoutes = require('./routes/mouvementdecompteclient_routes.js')
 
 const mouvementdecomptefournisseurRoutes = require('./routes/mouvementdecomptefournisseur_routes.js')
+const venteRoutes = require('./routes/vente_routes.js')
+const ligneventeRoutes = require('./routes/lignevente_routes.js')
+
 
 const payementclientRoutes = require('./routes/payementclient_routes.js')
 const fonctions = require("./fonctions")
@@ -82,6 +85,8 @@ app.use('/api/facturefournisseurs', facturefournisseurRoutes);
 app.use('/api/payementfournisseurs', payementfournisseurRoutes); 
 app.use('/api/mouvementdecomptefournisseurs', mouvementdecomptefournisseurRoutes); 
 app.use('/api/mouvementdecompteclients', mouvementdecompteclientRoutes); 
+app.use('/api/ventes', venteRoutes); 
+app.use('/api/ligneventes', ligneventeRoutes); 
 
 
 app.use(express.static('public')); 

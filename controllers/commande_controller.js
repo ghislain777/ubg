@@ -65,6 +65,7 @@ commandeController.add = async (req, res) => {
                     prixtotal: lignecommande.prixtotal,
                     prixunitaire: lignecommande.prixunitaire,
                     stock: lignecommande.stock,
+                    quantiteorigine:+lignecommande.quantiteorigine
                 })
             });
 

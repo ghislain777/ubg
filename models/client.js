@@ -21,6 +21,14 @@ module.exports = (sequelize, DataTypes) => {
           allowNull: true
         }
       })
+      
+             // magasin
+                this.belongsTo(models.Magasin, {
+                      foreignKey: { name: 'magasin', field:"magasin", allowNull: true }
+                  })
+                  models.Magasin.hasMany(this, {
+                      foreignKey: { name: "magasin", field: "magasin", allowNull: true }
+                  })
     
 
 

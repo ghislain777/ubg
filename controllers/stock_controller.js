@@ -8,7 +8,7 @@
     const stockController = {}
     
  stockController.includeStock = [
-    Magasin,Produit,]
+    Magasin,{model:Produit, include:["Origine"]},]
  stockController.add = async (req, res) => {
         try {
             const response = await Stock.create(req.body)

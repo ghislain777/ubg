@@ -21,6 +21,16 @@ module.exports = (sequelize, DataTypes) => {
           allowNull: true
         }
       })
+            
+             // produitdorigine/produitdetache
+                this.belongsTo(models.Produit, {
+                  as:"Origine",
+                      foreignKey: { name: 'produitdorigine', field:"produitdorigine", allowNull: true }
+                  })
+                  
+
+                 
+                 
     
 
 

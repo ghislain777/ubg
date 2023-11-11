@@ -18,7 +18,7 @@ const {
 const produitController = {}
 
 produitController.includeProduit = [
-    Souscategorie, Media
+    Souscategorie, Media, "Origine"
 ]
 produitController.add = async (req, res) => {
     try {

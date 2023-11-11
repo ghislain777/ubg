@@ -50,9 +50,34 @@ mouvementdestockController.getAll = async (req, res) => {
     itemsPerPage = req.query.itemsPerPage == undefined ? 30 : req.query.itemsPerPage
     page = req.query.page == undefined ? 1 : req.query.page
     const parametres = fonctions.removeNullValues(req.query)
-    const parametresRequete = fonctions.removePaginationkeys(parametres)
-    try {
+    let parametresRequete = fonctions.removePaginationkeys(parametres)
+  const magasin = req.query.magasin
+  console.log("Le magasin")
+  console.log(magasin)
+  let linclude = []
+  if(magasin !=undefined) { // on a envoyé le magasin
+parametresRequete = delete parametresRequete['magasin']
+linclude = [
+{
+    model: Stock,
+    where:{magasin:magasin},
+    include:[
+        {
+    model: Produit
+}, {
+    model: Magasin
+}
+    ]
+},
 
+]
+
+  }
+  else {
+    linclude = mouvementdestockController.includeMouvementdestock
+  }
+    
+    try {
 
         const resultat = await Mouvementdestock.findAndCountAll({
             offset: (page - 1) * itemsPerPage,
@@ -64,7 +89,7 @@ mouvementdestockController.getAll = async (req, res) => {
                 ...parametresRequete
 
             },
-            include: mouvementdestockController.includeMouvementdestock,
+            include: linclude,
         })
         res.send(resultat)
     } catch (err) {

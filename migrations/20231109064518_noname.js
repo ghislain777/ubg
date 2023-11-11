@@ -3,17 +3,15 @@ const Sequelize = require("sequelize");
 /**
  * Actions summary:
  *
- * createTable() => "mouvementdecompteclient", deps: [client]
- * createTable() => "mouvementdecomptefournisseur", deps: [fournisseur]
- * addColumn(compte) => "fournisseur"
- * changeColumn(compte) => "client"
+ * createTable() => "vente", deps: [client, magasin]
+ * createTable() => "lignevente", deps: [vente, stock]
  *
  */
 
 const info = {
-  revision: 17,
+  revision: 21,
   name: "noname",
-  created: "2023-10-20T18:13:22.864Z",
+  created: "2023-11-09T06:45:18.674Z",
   comment: "",
 };
 
@@ -21,7 +19,7 @@ const migrationCommands = (transaction) => [
   {
     fn: "createTable",
     params: [
-      "mouvementdecompteclient",
+      "vente",
       {
         id: {
           type: Sequelize.INTEGER,
@@ -30,11 +28,18 @@ const migrationCommands = (transaction) => [
           primaryKey: true,
           autoIncrement: true,
         },
-        motif: {
+        nom: {
           type: Sequelize.STRING,
-          field: "motif",
-          comment: "",
+          field: "nom",
+          comment: "Nom",
           defaultValue: "",
+          allowNull: true,
+        },
+        datevente: {
+          type: Sequelize.DATE,
+          field: "datevente",
+          comment: "Date",
+          defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
           allowNull: true,
         },
         montant: {
@@ -44,25 +49,52 @@ const migrationCommands = (transaction) => [
           defaultValue: 0,
           allowNull: true,
         },
-        soldeapres: {
+        remise: {
           type: Sequelize.INTEGER,
-          field: "soldeapres",
-          comment: "Solde après",
+          field: "remise",
+          comment: "Remise",
           defaultValue: 0,
           allowNull: true,
         },
-        datemouvement: {
-          type: Sequelize.DATE,
-          field: "datemouvement",
-          comment: "Date du mouvement",
-          defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
+        montantremise: {
+          type: Sequelize.INTEGER,
+          field: "montantremise",
+          comment: "Montant remisé",
+          defaultValue: 0,
           allowNull: true,
         },
-        typedemouvement: {
+        taxe: {
           type: Sequelize.STRING,
-          field: "typedemouvement",
-          comment: "Type de mouvement",
+          field: "taxe",
+          comment: "Taxe",
           defaultValue: "",
+          allowNull: true,
+        },
+        validite: {
+          type: Sequelize.INTEGER,
+          field: "validite",
+          comment: "Validité",
+          defaultValue: 0,
+          allowNull: true,
+        },
+        statut: {
+          type: Sequelize.STRING,
+          field: "statut",
+          comment: "Statut",
+          defaultValue: "Nouveau",
+          allowNull: true,
+        },
+        soustotal: {
+          type: Sequelize.INTEGER,
+          field: "soustotal",
+          comment: "Sous total",
+          defaultValue: 0,
+          allowNull: false,
+        },
+        dateannulation: {
+          type: Sequelize.DATE,
+          field: "dateannulation",
+          comment: "date dannulation",
           allowNull: true,
         },
         client: {
@@ -74,6 +106,15 @@ const migrationCommands = (transaction) => [
           name: "client",
           allowNull: false,
         },
+        magasin: {
+          type: Sequelize.INTEGER,
+          onUpdate: "CASCADE",
+          onDelete: "NO ACTION",
+          references: { model: "magasin", key: "id" },
+          field: "magasin",
+          name: "magasin",
+          allowNull: false,
+        },
       },
       { transaction },
     ],
@@ -81,7 +122,7 @@ const migrationCommands = (transaction) => [
   {
     fn: "createTable",
     params: [
-      "mouvementdecomptefournisseur",
+      "lignevente",
       {
         id: {
           type: Sequelize.INTEGER,
@@ -90,80 +131,58 @@ const migrationCommands = (transaction) => [
           primaryKey: true,
           autoIncrement: true,
         },
-        motif: {
-          type: Sequelize.STRING,
-          field: "motif",
-          comment: "",
-          defaultValue: "",
-          allowNull: true,
-        },
-        datemouvement: {
-          type: Sequelize.DATE,
-          field: "datemouvement",
-          comment: "Date du mouvement",
-          defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
-          allowNull: true,
-        },
-        montant: {
+        quantite: {
           type: Sequelize.INTEGER,
-          field: "montant",
-          comment: "Montant",
+          field: "quantite",
+          comment: 'Quantité?? ""',
           defaultValue: 0,
           allowNull: true,
         },
-        typedemouvement: {
-          type: Sequelize.STRING,
-          field: "typedemouvement",
-          comment: "Type de mouvement",
-          defaultValue: "",
-          allowNull: true,
-        },
-        soldeapres: {
+        prixunitaire: {
           type: Sequelize.INTEGER,
-          field: "soldeapres",
-          comment: "Solde après",
+          field: "prixunitaire",
+          comment: 'Prix unitaire?? ""',
           defaultValue: 0,
           allowNull: true,
         },
-        fournisseur: {
+        prixtotal: {
+          type: Sequelize.INTEGER,
+          field: "prixtotal",
+          comment: 'Prix total?? ""',
+          defaultValue: 0,
+          allowNull: true,
+        },
+        remise: {
+          type: Sequelize.INTEGER,
+          field: "remise",
+          comment: 'Remise?? ""',
+          defaultValue: 0,
+          allowNull: true,
+        },
+        quantiteorigine: {
+          type: Sequelize.FLOAT,
+          field: "quantiteorigine",
+          comment: "Quantite produit origine",
+          allowNull: true,
+        },
+        vente: {
           type: Sequelize.INTEGER,
           onUpdate: "CASCADE",
           onDelete: "NO ACTION",
-          references: { model: "fournisseur", key: "id" },
-          field: "fournisseur",
-          name: "fournisseur",
+          references: { model: "vente", key: "id" },
+          field: "vente",
+          name: "vente",
           allowNull: false,
         },
-      },
-      { transaction },
-    ],
-  },
-  {
-    fn: "addColumn",
-    params: [
-      "fournisseur",
-      "compte",
-      {
-        type: Sequelize.INTEGER,
-        field: "compte",
-        comment: "Compte",
-        defaultValue: 0,
-        allowNull: true,
-      },
-      { transaction },
-    ],
-  },
-  {
-    fn: "changeColumn",
-    params: [
-      "client",
-      "compte",
-      {
-        type: Sequelize.INTEGER,
-        field: "compte",
-        comment: "Compte",
-        defaultValue: 0,
-        allowNull: true,
+        stock: {
+          type: Sequelize.INTEGER,
+          onUpdate: "CASCADE",
+          onDelete: "NO ACTION",
+          references: { model: "stock", key: "id" },
+          field: "stock",
+          name: "stock",
+          allowNull: false,
+        },
       },
       { transaction },
     ],
@@ -172,31 +191,12 @@ const migrationCommands = (transaction) => [
 
 const rollbackCommands = (transaction) => [
   {
-    fn: "removeColumn",
-    params: ["fournisseur", "compte", { transaction }],
+    fn: "dropTable",
+    params: ["lignevente", { transaction }],
   },
   {
     fn: "dropTable",
-    params: ["mouvementdecompteclient", { transaction }],
-  },
-  {
-    fn: "dropTable",
-    params: ["mouvementdecomptefournisseur", { transaction }],
-  },
-  {
-    fn: "changeColumn",
-    params: [
-      "client",
-      "compte",
-      {
-        type: Sequelize.INTEGER,
-        field: "compte",
-        comment: 'Compte?? ""',
-        defaultValue: 0,
-        allowNull: true,
-      },
-      { transaction },
-    ],
+    params: ["vente", { transaction }],
   },
 ];
 

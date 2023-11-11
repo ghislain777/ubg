@@ -139,7 +139,7 @@
                 where: {
                     email: req.body.email
                 },
-                include: [Role]
+                include: [Role, Magasin]
             })
             if (!utilisateur) {
                 res.status(200).send({code: 401, message:"Adresse Email ou mot de passe incorrect"})

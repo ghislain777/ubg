@@ -1330,6 +1330,12 @@
                     "field": "remise",
                     "seqType": "Sequelize.INTEGER"
                 },
+                "quantiteorigine": {
+                    "allowNull": true,
+                    "comment": "Quantite produit origine",
+                    "field": "quantiteorigine",
+                    "seqType": "Sequelize.FLOAT"
+                },
                 "commande": {
                     "allowNull": false,
                     "name": "commande",
@@ -1622,6 +1628,85 @@
             },
             "indexes": []
         },
+        "lignevente": {
+            "tableName": "lignevente",
+            "schema": {
+                "id": {
+                    "autoIncrement": true,
+                    "primaryKey": true,
+                    "comment": "ID",
+                    "field": "id",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "quantite": {
+                    "allowNull": true,
+                    "defaultValue": {
+                        "value": 0
+                    },
+                    "comment": "Quantité?? \"\"",
+                    "field": "quantite",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "prixunitaire": {
+                    "allowNull": true,
+                    "defaultValue": {
+                        "value": 0
+                    },
+                    "comment": "Prix unitaire?? \"\"",
+                    "field": "prixunitaire",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "prixtotal": {
+                    "allowNull": true,
+                    "defaultValue": {
+                        "value": 0
+                    },
+                    "comment": "Prix total?? \"\"",
+                    "field": "prixtotal",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "remise": {
+                    "allowNull": true,
+                    "defaultValue": {
+                        "value": 0
+                    },
+                    "comment": "Remise?? \"\"",
+                    "field": "remise",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "quantiteorigine": {
+                    "allowNull": true,
+                    "comment": "Quantite produit origine",
+                    "field": "quantiteorigine",
+                    "seqType": "Sequelize.FLOAT"
+                },
+                "vente": {
+                    "allowNull": false,
+                    "name": "vente",
+                    "field": "vente",
+                    "references": {
+                        "model": "vente",
+                        "key": "id"
+                    },
+                    "onDelete": "NO ACTION",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "stock": {
+                    "allowNull": false,
+                    "name": "stock",
+                    "field": "stock",
+                    "references": {
+                        "model": "stock",
+                        "key": "id"
+                    },
+                    "onDelete": "NO ACTION",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.INTEGER"
+                }
+            },
+            "indexes": []
+        },
         "magasin": {
             "tableName": "magasin",
             "schema": {
@@ -1657,6 +1742,15 @@
                     },
                     "comment": "Telephone",
                     "field": "telephone",
+                    "seqType": "Sequelize.STRING"
+                },
+                "peutvendre": {
+                    "allowNull": true,
+                    "defaultValue": {
+                        "value": true
+                    },
+                    "comment": "Peut vendre?",
+                    "field": "peutvendre",
                     "seqType": "Sequelize.STRING"
                 },
                 "commune": {
@@ -2392,6 +2486,18 @@
                     "onDelete": "NO ACTION",
                     "onUpdate": "CASCADE",
                     "seqType": "Sequelize.INTEGER"
+                },
+                "produitdorigine": {
+                    "allowNull": true,
+                    "name": "produitdorigine",
+                    "field": "produitdorigine",
+                    "references": {
+                        "model": "produit",
+                        "key": "id"
+                    },
+                    "onDelete": "SET NULL",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.INTEGER"
                 }
             },
             "indexes": []
@@ -2763,7 +2869,7 @@
                 "civilite": {
                     "allowNull": false,
                     "defaultValue": {
-                        "value": ""
+                        "value": "M."
                     },
                     "comment": "Civilite",
                     "field": "civilite",
@@ -2823,6 +2929,131 @@
             },
             "indexes": []
         },
+        "vente": {
+            "tableName": "vente",
+            "schema": {
+                "id": {
+                    "autoIncrement": true,
+                    "primaryKey": true,
+                    "comment": "ID",
+                    "field": "id",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "nom": {
+                    "allowNull": true,
+                    "defaultValue": {
+                        "value": ""
+                    },
+                    "comment": "Nom",
+                    "field": "nom",
+                    "seqType": "Sequelize.STRING"
+                },
+                "datevente": {
+                    "allowNull": true,
+                    "defaultValue": {
+                        "internal": true,
+                        "value": "Sequelize.literal(\"CURRENT_TIMESTAMP\")"
+                    },
+                    "comment": "Date",
+                    "field": "datevente",
+                    "seqType": "Sequelize.DATE"
+                },
+                "montant": {
+                    "allowNull": true,
+                    "defaultValue": {
+                        "value": 0
+                    },
+                    "comment": "Montant",
+                    "field": "montant",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "remise": {
+                    "allowNull": true,
+                    "defaultValue": {
+                        "value": 0
+                    },
+                    "comment": "Remise",
+                    "field": "remise",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "montantremise": {
+                    "allowNull": true,
+                    "defaultValue": {
+                        "value": 0
+                    },
+                    "comment": "Montant remisé",
+                    "field": "montantremise",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "taxe": {
+                    "allowNull": true,
+                    "defaultValue": {
+                        "value": ""
+                    },
+                    "comment": "Taxe",
+                    "field": "taxe",
+                    "seqType": "Sequelize.STRING"
+                },
+                "validite": {
+                    "allowNull": true,
+                    "defaultValue": {
+                        "value": 0
+                    },
+                    "comment": "Validité",
+                    "field": "validite",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "statut": {
+                    "allowNull": true,
+                    "defaultValue": {
+                        "value": "Nouveau"
+                    },
+                    "comment": "Statut",
+                    "field": "statut",
+                    "seqType": "Sequelize.STRING"
+                },
+                "soustotal": {
+                    "allowNull": false,
+                    "defaultValue": {
+                        "value": 0
+                    },
+                    "comment": "Sous total",
+                    "field": "soustotal",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "dateannulation": {
+                    "allowNull": true,
+                    "comment": "date dannulation",
+                    "field": "dateannulation",
+                    "seqType": "Sequelize.DATE"
+                },
+                "client": {
+                    "allowNull": false,
+                    "name": "client",
+                    "field": "client",
+                    "references": {
+                        "model": "client",
+                        "key": "id"
+                    },
+                    "onDelete": "NO ACTION",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "magasin": {
+                    "allowNull": false,
+                    "name": "magasin",
+                    "field": "magasin",
+                    "references": {
+                        "model": "magasin",
+                        "key": "id"
+                    },
+                    "onDelete": "NO ACTION",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.INTEGER"
+                }
+            },
+            "indexes": []
+        },
         "ville": {
             "tableName": "ville",
             "schema": {
@@ -2855,8 +3086,8 @@
             "indexes": []
         }
     },
-    "path": "/home/ghislain/Documents/2023/1-PROJETS/LOGIAC/backend/migrations/_current.json",
-    "backupPath": "/home/ghislain/Documents/2023/1-PROJETS/LOGIAC/backend/migrations/_current_bak.json",
+    "path": "/home/ghislain/Documents/2023/1-PROJETS/UBG/backend/migrations/_current.json",
+    "backupPath": "/home/ghislain/Documents/2023/1-PROJETS/UBG/backend/migrations/_current_bak.json",
     "exists": true,
-    "revision": 17
+    "revision": 21
 }
