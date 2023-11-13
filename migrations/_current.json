@@ -1313,7 +1313,7 @@
                     },
                     "comment": "Quantité?? \"\"",
                     "field": "quantite",
-                    "seqType": "Sequelize.INTEGER"
+                    "seqType": "Sequelize.FLOAT"
                 },
                 "prixunitaire": {
                     "allowNull": true,
@@ -1465,7 +1465,7 @@
                     },
                     "comment": "Quantité?? \"\"",
                     "field": "quantite",
-                    "seqType": "Sequelize.INTEGER"
+                    "seqType": "Sequelize.FLOAT"
                 },
                 "prixunitaire": {
                     "allowNull": true,
@@ -1657,7 +1657,7 @@
                     },
                     "comment": "Quantité?? \"\"",
                     "field": "quantite",
-                    "seqType": "Sequelize.INTEGER"
+                    "seqType": "Sequelize.FLOAT"
                 },
                 "prixunitaire": {
                     "allowNull": true,
@@ -3101,5 +3101,5 @@
     "path": "/home/ghislain/Documents/2023/1-PROJETS/UBG/backend/migrations/_current.json",
     "backupPath": "/home/ghislain/Documents/2023/1-PROJETS/UBG/backend/migrations/_current_bak.json",
     "exists": true,
-    "revision": 22
+    "revision": 23
 }

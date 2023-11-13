@@ -38,8 +38,22 @@ const payementService = require('../services/payement_service');
         page = req.query.page == undefined ? 1 : req.query.page
     const parametres = fonctions.removeNullValues(req.query)
     const parametresRequete = fonctions.removePaginationkeys(parametres)
+    let lewhere = parametresRequete
+    let linclude =[]
+    if(parametresRequete.client === undefined) { // on ne filtre pas sur le client
+        lewhere = parametresRequete 
+        linclude = payementclientController.includePayementclient
+
+    }
+    else {
+        const leclient = parametresRequete.client
+         delete parametresRequete["client"]
+         lewhere = parametresRequete
+         linclude = [
+            {model:Facture, include:[Client], where:{client:leclient}},
+         ]
+    }
         try {
-           
     
             const resultat = await Payementclient.findAndCountAll(
                 {
@@ -47,10 +61,9 @@ const payementService = require('../services/payement_service');
                     limit: itemsPerPage*1,
                     order:[['id', 'desc']],
                     where: {
-                        ...parametresRequete
-                     
+                        ...lewhere
                     },
-                    include: payementclientController.includePayementclient,
+                    include: linclude,
                 }
             )
             res.send(resultat)

@@ -193,7 +193,10 @@
                             })
                         }
                     });
-                    navigation.push(leMenu)
+                    
+                    if(leMenu.children.length > 0) {
+                        navigation.push(leMenu)
+                    }
                 });
                 res.status(200).send({ utilisateur: utilisateur, privileges: listeprivileges, navigation: navigation,code:200 })
             }

@@ -51,7 +51,7 @@ module.exports = (sequelize, DataTypes) => {
         },
       
           quantite: {
-              type: DataTypes.INTEGER,
+              type: DataTypes.FLOAT,
               allowNull: true,
               defaultValue: 0,
               comment: 'Quantité?? ""'
