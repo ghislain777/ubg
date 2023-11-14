@@ -7,12 +7,13 @@ const {
     const { where } = require('sequelize');
     const { Sequelize, Op } = require('sequelize');
     const fonctions = require('../fonctions');
-    const {  Payementclient, Facture,Client  } = require('../models');
+    const {  Payementclient, Facture,Client, Magasin  } = require('../models');
 const payementService = require('../services/payement_service');
     const payementclientController = {}
     
  payementclientController.includePayementclient = [
-    {model:Facture, include:[Client]},]
+    {model:Facture, include:[Client, Magasin]},]
+
  payementclientController.add = async (req, res) => {
         try {
             const response = await Payementclient.create(req.body)
@@ -37,22 +38,46 @@ const payementService = require('../services/payement_service');
         itemsPerPage = req.query.itemsPerPage == undefined ? 30 : req.query.itemsPerPage
         page = req.query.page == undefined ? 1 : req.query.page
     const parametres = fonctions.removeNullValues(req.query)
-    const parametresRequete = fonctions.removePaginationkeys(parametres)
+    let parametresRequete = fonctions.removePaginationkeys(parametres)
     let lewhere = parametresRequete
     let linclude =[]
-    if(parametresRequete.client === undefined) { // on ne filtre pas sur le client
+    let whereMagasin = {}
+    let whereClient = {}
+
+    // si le parametre magasin a été donné ou pas
+    if(typeof parametresRequete.magasin === "undefined") { // on ne filtre pas sur le magasin
         lewhere = parametresRequete 
-        linclude = payementclientController.includePayementclient
+       // linclude = [{model:Facture, include:[Client, Magasin]},]
 
     }
     else {
-        const leclient = parametresRequete.client
-         delete parametresRequete["client"]
+        const lemagasin = parametresRequete.magasin
+         delete parametresRequete["magasin"]
+         whereMagasin = {magasin:+lemagasin}
          lewhere = parametresRequete
-         linclude = [
-            {model:Facture, include:[Client], where:{client:leclient}},
-         ]
+        //  linclude = [
+        //     {model:Facture, include:[Client, Magasin], where:{magasin:lemagasin}},
+        //  ]
     }
+    // si le parametre client a été donné ou pas
+    if(typeof parametresRequete.client === "undefined") { // le parametre client , n'a pas été envoyé
+        lewhere = parametresRequete
+    }
+    else {
+        const leclient = parametresRequete.client
+        delete parametresRequete["client"]
+        lewhere = parametresRequete
+        whereClient = {client:+leclient}
+    }
+    linclude = [
+        {model:Facture, include:[Client, Magasin], where:{...whereClient, ...whereMagasin}},
+    ]
+
+    console.log(linclude)
+
+
+
+
         try {
     
             const resultat = await Payementclient.findAndCountAll(

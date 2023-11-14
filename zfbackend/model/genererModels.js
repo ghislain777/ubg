@@ -32,7 +32,7 @@ String.prototype.ucfirst = function () {
 const colones = Object.keys(tab)
 //console.log(tab)
 colones.forEach((colone) => {
-    const commentaire = tab[colone].comment === undefined ? colone : tab[colone].comment;
+    const commentaire = typeof tab[colone].comment === "undefined" ? colone : tab[colone].comment;
     let champ = {
         nom: colone,
         titre: "",
