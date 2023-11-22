@@ -46,12 +46,15 @@ const fonctions = require("./fonctions")
 const PORT = process.env.PORT || 8000
 const app = express()
 const path = require('path');
+const dashboardRoutes = require('./routes/dashboard_routes');
 
 app.use(bodyParser.json())
 app.use(cors({
   origin: '*'
 }));
 
+
+app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/roles', roleRoutes);
 app.use('/api/utilisateurs', utilisateurRoutes);
 app.use('/api/menus', menuRoutes);
@@ -87,6 +90,10 @@ app.use('/api/mouvementdecomptefournisseurs', mouvementdecomptefournisseurRoutes
 app.use('/api/mouvementdecompteclients', mouvementdecompteclientRoutes); 
 app.use('/api/ventes', venteRoutes); 
 app.use('/api/ligneventes', ligneventeRoutes); 
+
+app.get('/api/*', (req, res) => {
+  res.status(404).send("Not found");
+});
 
 
 app.use(express.static('public')); 
