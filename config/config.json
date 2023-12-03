@@ -7,10 +7,10 @@
     "dialect": "mysql"
   },
   "test": {
-    "username": "root",
-    "password": "ghislain",
-    "database": "aliecard",
-    "host": "127.0.0.1",
+    "username": "logi_demo",
+    "password": "H#PJy^if0fLFnbFs",
+    "database": "logi_demo",
+    "host": "logiac.groupeziamma.com",
     "dialect": "mysql"
   },
   "production": {
