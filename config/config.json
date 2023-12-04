@@ -17,7 +17,7 @@
     "username": "admin_logiac",
     "password": "ynz6CtkzBCt9Cjpx",
     "database": "admin_logiac",
-    "host": "admin.ubg-guinee.com",
+    "host": "localhost",
     "dialect": "mysql"
   } 
 }
