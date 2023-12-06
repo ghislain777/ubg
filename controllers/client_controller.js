@@ -27,17 +27,20 @@
         }
     }
     
- clientController.getAll = async (req, res) => {
+ clientController.getAll = async (req, res) => { 
+    console.log(req.body.id)
         let  itemsPerPage = 30;
         let page =1;
         itemsPerPage = req.query.itemsPerPage == undefined ? 30 : req.query.itemsPerPage
+
+
         page = req.query.page == undefined ? 1 : req.query.page
     const parametres = fonctions.removeNullValues(req.query)
     const parametresRequete = fonctions.removePaginationkeys(parametres)
         try {
            
     
-            const resultat = await Client.findAndCountAll(
+            let resultat = await Client.findAndCountAll(
                 {
                     offset: (page - 1) * itemsPerPage,
                     limit: itemsPerPage*1,
@@ -49,6 +52,21 @@
                     include: clientController.includeClient,
                 }
             )
+
+            if(req.query.id != undefined) {
+               // console.log("On a renseigné le id")
+
+                resultat = await Client.findAndCountAll(
+                    {
+ 
+                        where: {
+                            id: req.query.id                       
+                        },
+                        include: clientController.includeClient,
+                    }
+                )
+
+            }
             res.send(resultat)
         } catch (err) {
             console.log(err)
