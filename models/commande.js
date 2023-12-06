@@ -36,6 +36,14 @@ module.exports = (sequelize, DataTypes) => {
         }
       })
 
+             // utilisateur
+                this.belongsTo(models.Utilisateur, {
+                      foreignKey: { name: 'utilisateur', field:"utilisateur", allowNull: true }
+                  })
+                  models.Utilisateur.hasMany(this, {
+                      foreignKey: { name: "utilisateur", field: "utilisateur", allowNull: true }
+                  })
+
     }
   }
   Commande.init({

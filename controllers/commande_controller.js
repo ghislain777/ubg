@@ -16,14 +16,15 @@ const {
     Lignecommande,
     Client,
     Stock,
-    Produit
+    Produit,
+    Utilisateur
 } = require('../models');
 const { log } = require('winston');
 const commandeService = require('../services/commande_service');
 const commandeController = {}
 
 commandeController.includeCommande = [
-    Client, Lignecommande,Magasin
+    Client, Lignecommande,Magasin, Utilisateur
 ]
 
 
@@ -40,7 +41,8 @@ commandeController.add = async (req, res) => {
             montant,
             soustotal,
             taxe,
-            total
+            total,
+            utilisateur
         } = req.body
 
         if (Lignecommandes.length === 0) { // il n'y a pas de produit 
@@ -55,7 +57,8 @@ commandeController.add = async (req, res) => {
                 soustotal: soustotal,
                 taxe: taxe,
                 statut: "Nouveau",
-                adresse: adresse
+                adresse: adresse,
+                utilisateur:utilisateur
             })
             // on enregistre les lignes de commande
             Lignecommandes.forEach(async (lignecommande) => {
@@ -307,7 +310,7 @@ commandeController.imprimer = async (req, res) => {
             id: req.params.id
         },
         include: [
-            Client, Lignecommande,Magasin, Client,
+            Client, Lignecommande,Magasin, Client,Utilisateur,
             {model:Lignecommande, include:[{model:Stock, include:[Produit]}]}
         ]
     })

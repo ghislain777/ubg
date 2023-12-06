@@ -255,6 +255,11 @@ fonctionsCommande.genererModalitesDePayement = (doc, commande) => {
    .font("Helvetica-Bold").fontSize(10)
    .text(NumberToLetter(commande.montant) +" "+ entreprise.devise)
     doc.moveDown()
+    doc.moveDown()
+    doc.moveDown()
+    doc.font("Helvetica").fontSize(10).text('Vendeur:',30)
+    doc.font("Helvetica-Bold").fontSize(10).
+    text(`${commande.Utilisateur.nom?? ""} ${commande.Utilisateur.prenom?? ""}`,30)
   
     }
 

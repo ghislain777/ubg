@@ -173,6 +173,10 @@ fonctionsFacture.genererDetailsfacture = (doc, facture) => {
    .font("Helvetica-Bold").fontSize(10)
    .text(NumberToLetter(facture.montant) +" "+ entreprise.devise)
     doc.moveDown()
+    doc.moveDown()
+    doc.font("Helvetica").fontSize(10).text('Vendeur:',30)
+    doc.font("Helvetica-Bold").fontSize(10).
+    text(`${facture.Utilisateur.nom?? ""} ${facture.Utilisateur.prenom?? ""}`,30)
 }
 
 

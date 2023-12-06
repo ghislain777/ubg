@@ -560,6 +560,18 @@
                     "onDelete": "NO ACTION",
                     "onUpdate": "CASCADE",
                     "seqType": "Sequelize.INTEGER"
+                },
+                "utilisateur": {
+                    "allowNull": true,
+                    "name": "utilisateur",
+                    "field": "utilisateur",
+                    "references": {
+                        "model": "utilisateur",
+                        "key": "id"
+                    },
+                    "onDelete": "SET NULL",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.INTEGER"
                 }
             },
             "indexes": []
@@ -973,6 +985,18 @@
                     "field": "client",
                     "references": {
                         "model": "client",
+                        "key": "id"
+                    },
+                    "onDelete": "SET NULL",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "utilisateur": {
+                    "allowNull": true,
+                    "name": "utilisateur",
+                    "field": "utilisateur",
+                    "references": {
+                        "model": "utilisateur",
                         "key": "id"
                     },
                     "onDelete": "SET NULL",
@@ -3062,6 +3086,18 @@
                     "onDelete": "NO ACTION",
                     "onUpdate": "CASCADE",
                     "seqType": "Sequelize.INTEGER"
+                },
+                "utilisateur": {
+                    "allowNull": true,
+                    "name": "utilisateur",
+                    "field": "utilisateur",
+                    "references": {
+                        "model": "utilisateur",
+                        "key": "id"
+                    },
+                    "onDelete": "SET NULL",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.INTEGER"
                 }
             },
             "indexes": []
@@ -3101,5 +3137,5 @@
     "path": "/home/ghislain/Documents/2023/1-PROJETS/UBG/backend/migrations/_current.json",
     "backupPath": "/home/ghislain/Documents/2023/1-PROJETS/UBG/backend/migrations/_current_bak.json",
     "exists": true,
-    "revision": 23
+    "revision": 25
 }

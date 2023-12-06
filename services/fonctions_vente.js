@@ -173,6 +173,10 @@ const {
      .font("Helvetica-Bold").fontSize(10)
      .text(NumberToLetter(vente.montant) +" "+ entreprise.devise)
       doc.moveDown()
+      doc.moveDown()
+      doc.font("Helvetica").fontSize(10).text('Vendeur:',30)
+      doc.font("Helvetica-Bold").fontSize(10).
+      text(`${vente.Utilisateur.nom?? ""} ${vente.Utilisateur.prenom?? ""}`,30)
   }
   
   

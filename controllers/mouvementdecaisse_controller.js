@@ -48,7 +48,30 @@ mouvementdecaisseController.getAll = async (req, res) => {
     itemsPerPage = req.query.itemsPerPage == undefined ? 30 : req.query.itemsPerPage
     page = req.query.page == undefined ? 1 : req.query.page
     const parametres = fonctions.removeNullValues(req.query)
-    const parametresRequete = fonctions.removePaginationkeys(parametres)
+    let parametresRequete = fonctions.removePaginationkeys(parametres)
+  const magasin = req.query.magasin
+  console.log("Le magasin")
+  console.log(magasin)
+  let linclude = []
+  if(typeof magasin !="undefined") { // on a envoyé le magasin
+parametresRequete = delete parametresRequete['magasin']
+linclude = [
+{
+    model: Caissemagasin,
+    where:{magasin:magasin},
+    include:[
+        {
+    model: Magasin
+}
+    ]
+},
+
+]
+
+  }
+  else {
+    linclude = mouvementdecaisseController.includeMouvementdecaisse
+  }
     try {
 
 
@@ -62,7 +85,7 @@ mouvementdecaisseController.getAll = async (req, res) => {
                 ...parametresRequete
 
             },
-            include: mouvementdecaisseController.includeMouvementdecaisse,
+            include: linclude,
         })
         res.send(resultat)
     } catch (err) {

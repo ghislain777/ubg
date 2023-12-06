@@ -103,14 +103,15 @@ const facture = await Facture.create({
   montant:commande.montant,
   statut:"Non payée",
   payementcomplet: false,
-  resteapayer:commande.montant,
+  resteapayer:commande.montant, 
   soustotal:commande.soustotal,
   taxe:commande.taxe,
   etat:"ouvert",
   datefacture:new Date(),
   modedepayement:1,
   client:commande.client,
-  magasin:commande.magasin
+  magasin:commande.magasin,
+  utilisateur:commande.utilisateur
 })
 
 // creation des lignes de facture

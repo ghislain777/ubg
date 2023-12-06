@@ -35,6 +35,13 @@ module.exports = (sequelize, DataTypes) => {
           allowNull: true
         }
       })
+             // utilisateur
+                this.belongsTo(models.Utilisateur, {
+                      foreignKey: { name: 'utilisateur', field:"utilisateur", allowNull: true }
+                  })
+                  models.Utilisateur.hasMany(this, {
+                      foreignKey: { name: "utilisateur", field: "utilisateur", allowNull: true }
+                  })
 
     }
   }

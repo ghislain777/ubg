@@ -16,7 +16,8 @@ const {
     Magasin,
     Lignevente,
     Stock,
-    Produit
+    Produit,
+    Utilisateur
 } = require('../models');
 const venteService = require('../services/vente_service');
 const venteController = {}
@@ -30,8 +31,10 @@ venteController.includeVente = [
                 model: Produit,
                 include: ["Origine"]
             }]
-        }]
-    },
+        },
+    
+    ]
+    },Utilisateur
 ]
 venteController.add = async (req, res) => {
 
@@ -44,7 +47,8 @@ venteController.add = async (req, res) => {
             montant,
             soustotal,
             taxe,
-            total
+            total,
+            utilisateur
         } = req.body
 
         if (Ligneventes.length === 0) { // il n'y a pas de produit 
@@ -59,6 +63,7 @@ venteController.add = async (req, res) => {
                 soustotal: soustotal,
                 taxe: taxe,
                 statut: "Nouveau",
+                utilisateur:utilisateur
             })
             // on enregistre les lignes de ventes
 
@@ -102,7 +107,6 @@ venteController.getAll = async (req, res) => {
     const parametres = fonctions.removeNullValues(req.query)
     const parametresRequete = fonctions.removePaginationkeys(parametres)
     try {
-
 
         const resultat = await Vente.findAndCountAll({
             offset: (page - 1) * itemsPerPage,
@@ -208,6 +212,7 @@ venteController.imprimerVente = async (req, res) => {
             {
                 model: Client,
             },
+            Utilisateur
         ]
     })
 

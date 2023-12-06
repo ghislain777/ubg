@@ -55,7 +55,7 @@ mouvementdestockController.getAll = async (req, res) => {
   console.log("Le magasin")
   console.log(magasin)
   let linclude = []
-  if(magasin !=undefined) { // on a envoyé le magasin
+  if(typeof magasin !="undefined") { // on a envoyé le magasin
 parametresRequete = delete parametresRequete['magasin']
 linclude = [
 {
