@@ -771,6 +771,92 @@
             },
             "indexes": []
         },
+        "creance": {
+            "tableName": "creance",
+            "schema": {
+                "id": {
+                    "autoIncrement": true,
+                    "primaryKey": true,
+                    "comment": "ID",
+                    "field": "id",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "montant": {
+                    "allowNull": false,
+                    "comment": "Montant",
+                    "field": "montant",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "datecreance": {
+                    "allowNull": false,
+                    "defaultValue": {
+                        "internal": true,
+                        "value": "Sequelize.literal(\"CURRENT_TIMESTAMP\")"
+                    },
+                    "comment": "Date de la creance",
+                    "field": "datecreance",
+                    "seqType": "Sequelize.DATE"
+                },
+                "montantverse": {
+                    "allowNull": false,
+                    "defaultValue": {
+                        "value": 0
+                    },
+                    "comment": "Montant versé",
+                    "field": "montantverse",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "montantrestant": {
+                    "allowNull": false,
+                    "defaultValue": {
+                        "value": 0
+                    },
+                    "comment": "montant restant",
+                    "field": "montantrestant",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "ferme": {
+                    "allowNull": false,
+                    "defaultValue": {
+                        "value": false
+                    },
+                    "comment": "Fermé?",
+                    "field": "ferme",
+                    "seqType": "Sequelize.BOOLEAN"
+                },
+                "description": {
+                    "allowNull": true,
+                    "comment": "Description",
+                    "field": "description",
+                    "seqType": "Sequelize.STRING"
+                },
+                "client": {
+                    "allowNull": true,
+                    "name": "client",
+                    "field": "client",
+                    "references": {
+                        "model": "client",
+                        "key": "id"
+                    },
+                    "onDelete": "SET NULL",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "caissemagasin": {
+                    "allowNull": true,
+                    "name": "caissemagasin",
+                    "field": "caissemagasin",
+                    "references": {
+                        "model": "caissemagasin",
+                        "key": "id"
+                    },
+                    "onDelete": "SET NULL",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.INTEGER"
+                }
+            },
+            "indexes": []
+        },
         "depense": {
             "tableName": "depense",
             "schema": {
@@ -830,6 +916,92 @@
                         "key": "id"
                     },
                     "onDelete": "NO ACTION",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.INTEGER"
+                }
+            },
+            "indexes": []
+        },
+        "dette": {
+            "tableName": "dette",
+            "schema": {
+                "id": {
+                    "autoIncrement": true,
+                    "primaryKey": true,
+                    "comment": "ID",
+                    "field": "id",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "montant": {
+                    "allowNull": false,
+                    "comment": "Montant",
+                    "field": "montant",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "datedette": {
+                    "allowNull": false,
+                    "defaultValue": {
+                        "internal": true,
+                        "value": "Sequelize.literal(\"CURRENT_TIMESTAMP\")"
+                    },
+                    "comment": "Date de la dette",
+                    "field": "datedette",
+                    "seqType": "Sequelize.DATE"
+                },
+                "montantverse": {
+                    "allowNull": false,
+                    "defaultValue": {
+                        "value": 0
+                    },
+                    "comment": "Montant versé",
+                    "field": "montantverse",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "montantrestant": {
+                    "allowNull": false,
+                    "defaultValue": {
+                        "value": 0
+                    },
+                    "comment": "montant restant",
+                    "field": "montantrestant",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "ferme": {
+                    "allowNull": false,
+                    "defaultValue": {
+                        "value": false
+                    },
+                    "comment": "Fermé?",
+                    "field": "ferme",
+                    "seqType": "Sequelize.BOOLEAN"
+                },
+                "description": {
+                    "allowNull": true,
+                    "comment": "Description",
+                    "field": "description",
+                    "seqType": "Sequelize.STRING"
+                },
+                "client": {
+                    "allowNull": true,
+                    "name": "client",
+                    "field": "client",
+                    "references": {
+                        "model": "client",
+                        "key": "id"
+                    },
+                    "onDelete": "SET NULL",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "caissemagasin": {
+                    "allowNull": true,
+                    "name": "caissemagasin",
+                    "field": "caissemagasin",
+                    "references": {
+                        "model": "caissemagasin",
+                        "key": "id"
+                    },
+                    "onDelete": "SET NULL",
                     "onUpdate": "CASCADE",
                     "seqType": "Sequelize.INTEGER"
                 }
@@ -3102,6 +3274,124 @@
             },
             "indexes": []
         },
+        "versementcreance": {
+            "tableName": "versementcreance",
+            "schema": {
+                "id": {
+                    "autoIncrement": true,
+                    "primaryKey": true,
+                    "comment": "ID",
+                    "field": "id",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "montantverse": {
+                    "allowNull": false,
+                    "defaultValue": {
+                        "value": 0
+                    },
+                    "comment": "Montant versé",
+                    "field": "montantverse",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "dateversement": {
+                    "allowNull": false,
+                    "defaultValue": {
+                        "internal": true,
+                        "value": "Sequelize.literal(\"CURRENT_TIMESTAMP\")"
+                    },
+                    "comment": "Date versement",
+                    "field": "dateversement",
+                    "seqType": "Sequelize.DATE"
+                },
+                "resteaverser": {
+                    "allowNull": false,
+                    "defaultValue": {
+                        "value": 0
+                    },
+                    "comment": "Reste à verser",
+                    "field": "resteaverser",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "description": {
+                    "allowNull": true,
+                    "comment": "Description",
+                    "field": "description",
+                    "seqType": "Sequelize.STRING"
+                },
+                "creance": {
+                    "allowNull": true,
+                    "name": "creance",
+                    "field": "creance",
+                    "references": {
+                        "model": "creance",
+                        "key": "id"
+                    },
+                    "onDelete": "SET NULL",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.INTEGER"
+                }
+            },
+            "indexes": []
+        },
+        "versementdette": {
+            "tableName": "versementdette",
+            "schema": {
+                "id": {
+                    "autoIncrement": true,
+                    "primaryKey": true,
+                    "comment": "ID",
+                    "field": "id",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "montantverse": {
+                    "allowNull": false,
+                    "defaultValue": {
+                        "value": 0
+                    },
+                    "comment": "Montant versé",
+                    "field": "montantverse",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "dateversement": {
+                    "allowNull": false,
+                    "defaultValue": {
+                        "internal": true,
+                        "value": "Sequelize.literal(\"CURRENT_TIMESTAMP\")"
+                    },
+                    "comment": "Date versement",
+                    "field": "dateversement",
+                    "seqType": "Sequelize.DATE"
+                },
+                "resteaverser": {
+                    "allowNull": false,
+                    "defaultValue": {
+                        "value": 0
+                    },
+                    "comment": "Reste à verser",
+                    "field": "resteaverser",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "description": {
+                    "allowNull": true,
+                    "comment": "Description",
+                    "field": "description",
+                    "seqType": "Sequelize.STRING"
+                },
+                "dette": {
+                    "allowNull": true,
+                    "name": "dette",
+                    "field": "dette",
+                    "references": {
+                        "model": "dette",
+                        "key": "id"
+                    },
+                    "onDelete": "SET NULL",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.INTEGER"
+                }
+            },
+            "indexes": []
+        },
         "ville": {
             "tableName": "ville",
             "schema": {
@@ -3137,5 +3427,5 @@
     "path": "/home/ghislain/Documents/2023/1-PROJETS/UBG/backend/migrations/_current.json",
     "backupPath": "/home/ghislain/Documents/2023/1-PROJETS/UBG/backend/migrations/_current_bak.json",
     "exists": true,
-    "revision": 25
+    "revision": 28
 }

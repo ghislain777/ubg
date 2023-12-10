@@ -38,6 +38,12 @@ const mouvementdecompteclientRoutes = require('./routes/mouvementdecompteclient_
 const mouvementdecomptefournisseurRoutes = require('./routes/mouvementdecomptefournisseur_routes.js')
 const venteRoutes = require('./routes/vente_routes.js')
 const ligneventeRoutes = require('./routes/lignevente_routes.js')
+const detteRoutes = require('./routes/dette_routes.js')
+const versementdetteRoutes = require('./routes/versementdette_routes.js')
+const creanceRoutes = require('./routes/creance_routes.js')
+const versementcreanceRoutes = require('./routes/versementcreance_routes.js')
+
+
 
 
 const payementclientRoutes = require('./routes/payementclient_routes.js')
@@ -90,6 +96,10 @@ app.use('/api/mouvementdecomptefournisseurs', mouvementdecomptefournisseurRoutes
 app.use('/api/mouvementdecompteclients', mouvementdecompteclientRoutes); 
 app.use('/api/ventes', venteRoutes); 
 app.use('/api/ligneventes', ligneventeRoutes); 
+app.use('/api/versementdettes', versementdetteRoutes); 
+app.use('/api/dettes', detteRoutes); 
+app.use('/api/creances', creanceRoutes); 
+app.use('/api/versementcreances', versementcreanceRoutes); 
 
 app.get('/api/*', (req, res) => {
   res.status(404).send("Not found");
