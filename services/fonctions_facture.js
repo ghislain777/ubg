@@ -177,6 +177,9 @@ fonctionsFacture.genererDetailsfacture = (doc, facture) => {
     doc.font("Helvetica").fontSize(10).text('Vendeur:',30)
     doc.font("Helvetica-Bold").fontSize(10).
     text(`${facture.Utilisateur.nom?? ""} ${facture.Utilisateur.prenom?? ""}`,30)
+    doc.moveUp()
+    doc.font("Helvetica").fontSize(10).
+    text(`Le client:`,500)
 }
 
 
