@@ -10,7 +10,7 @@ fonctionsDocument.genererEntete = (doc) => {
     
   doc
   .image(entreprise.logo, 10, 10, {
-    width: 100
+    width: 175
   })
   .fillColor("#444444")
   .fontSize(20)

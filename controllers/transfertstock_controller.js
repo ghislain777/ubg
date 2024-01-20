@@ -15,8 +15,10 @@ const {
     Magasin,
     Lignetransfert,
     Stock,
-    Mouvementdestock
+    Mouvementdestock,
+    Produit
 } = require('../models');
+const transfertstockService = require('../services/transfertstock_service');
 const transfertstockController = {}
 
 transfertstockController.includeTransfertstock = [
@@ -25,27 +27,32 @@ transfertstockController.includeTransfertstock = [
 transfertstockController.add = async (req, res) => {
     try {
 
-const { motif, magasindepart, magasindestination, Lignetransferts} = req.body
+        const {
+            motif,
+            magasindepart,
+            magasindestination,
+            Lignetransferts
+        } = req.body
 
-// on enregistre le nouveau transfert
+        // on enregistre le nouveau transfert
 
 
 
         const transfert = await Transfertstock.create({
-            magasindepart:+magasindepart,
-            magasinarrivee:+magasindestination,
-            motif:motif
+            magasindepart: +magasindepart,
+            magasinarrivee: +magasindestination,
+            motif: motif
         })
 
-for (var i = 0; i < Lignetransferts.length; i++) {
-// on recherche le stock associé au magasin et au produi
-    await Lignetransfert.create({
-        transfertstock: transfert.id,
-        quantite:+Lignetransferts[i].quantite, 
-        produit: +Lignetransferts[i].produit
-    })
-};
-    
+        for (var i = 0; i < Lignetransferts.length; i++) {
+            // on recherche le stock associé au magasin et au produi
+            await Lignetransfert.create({
+                transfertstock: transfert.id,
+                quantite: +Lignetransferts[i].quantite,
+                produit: +Lignetransferts[i].produit
+            })
+        };
+
         const retour = await Transfertstock.findOne({
             where: {
                 id: transfert.id
@@ -91,72 +98,90 @@ transfertstockController.getAll = async (req, res) => {
 
 // Mise à jour d'un transfert de stock.
 transfertstockController.update = async (req, res) => {
-   try {
-    const transfert = await Transfertstock.findOne({
-        where:{id: req.params.id}
-    })
- const response = await Transfertstock.update(req.body, {
+    try {
+        const transfert = await Transfertstock.findOne({
             where: {
                 id: req.params.id
             }
         })
-    if(transfert.statut != req.body.statut) { // il y a eu changement de statut
-
-        const lesLignetransfert = await Lignetransfert.findAll({
-            where:{
-                transfertstock:transfert.id
+        const response = await Transfertstock.update(req.body, {
+            where: {
+                id: req.params.id
             }
         })
-           
-  
-switch(req.body.statut) {
-    case "Expédié":
- // on fait le debit correspondant à chaque ligne de transfert
+        if (transfert.statut != req.body.statut) { // il y a eu changement de statut
 
- for (var i = 0; i < lesLignetransfert.length; i++) {
-    const ligne = lesLignetransfert[i]
-     // on retrouve le stock
-const stock = await Stock.findOne({
-where: {
-    magasin:transfert.magasindepart,
-    produit: ligne.produit
-}
-}) 
-// on débite le stock (on fait une sortie de stock)
-await Mouvementdestock.create({
-stock:stock.id,
-quantite:ligne.quantite,
-typedemouvement:"sortie",
-motif: `Expédition du transfert de stock #${transfert.id}`
-})  
-};
-        break;
-    case "Réceptionné":
-        // on fait le credit correspondant à chaque ligne de transfert
+            const lesLignetransfert = await Lignetransfert.findAll({
+                where: {
+                    transfertstock: transfert.id
+                }
+            })
 
-        for (var i = 0; i < lesLignetransfert.length; i++) {
-            const ligne = lesLignetransfert[i]
-             // on retrouve le stock
-     const stock = await Stock.findOne({
-            where: {
-            magasin:transfert.magasinarrivee,
-            produit: ligne.produit
-           }
-        }) 
-     // on débite le stock (on fait une sortie de stock)
-        await Mouvementdestock.create({
-        stock:stock.id,
-        quantite:ligne.quantite,
-        typedemouvement:"entree",
-        motif: `Réception du transfert de stock #${transfert.id}`
-        })  
-    };
-        break;
-    default:
-        // default code
-};   
-    }
-   
+
+            switch (req.body.statut) {
+                case "Expédié":
+
+                // on update de transfert de la date d'expédition
+               await  Transfertstock.update({datedexpedition: new Date()}, {
+                    where:{
+                        id:transfert.id
+                    }
+                })
+
+
+
+                    // on fait le debit correspondant à chaque ligne de transfert
+
+                    for (var i = 0; i < lesLignetransfert.length; i++) {
+                        const ligne = lesLignetransfert[i]
+                        // on retrouve le stock
+                        const stock = await Stock.findOne({
+                            where: {
+                                magasin: transfert.magasindepart,
+                                produit: ligne.produit
+                            }
+                        })
+                        // on débite le stock (on fait une sortie de stock)
+                        await Mouvementdestock.create({
+                            stock: stock.id,
+                            quantite: ligne.quantite,
+                            typedemouvement: "sortie",
+                            motif: `Expédition du transfert de stock #${transfert.id}`
+                        })
+                    };
+                    break;
+                case "Réceptionné":
+                    // on met à jour la date de reception
+                    await  Transfertstock.update({datedereception: new Date()}, {
+                        where:{
+                            id:transfert.id
+                        }
+                    })
+                    // on fait le credit correspondant à chaque ligne de transfert
+
+                    for (var i = 0; i < lesLignetransfert.length; i++) {
+                        const ligne = lesLignetransfert[i]
+                        // on retrouve le stock
+                        const stock = await Stock.findOne({
+                            where: {
+                                magasin: transfert.magasinarrivee,
+                                produit: ligne.produit
+                            }
+                        })
+                        // on débite le stock (on fait une sortie de stock)
+                        await Mouvementdestock.create({
+                            stock: stock.id,
+                            quantite: ligne.quantite,
+                            typedemouvement: "entree",
+                            motif: `Réception du transfert de stock #${transfert.id}`
+                        })
+                    };
+                    break;
+                default:
+                    // default code
+            };
+        }
+
         const transfertstock = await Transfertstock.findOne({
             where: {
                 id: req.params.id
@@ -213,6 +238,42 @@ transfertstockController.getBy = async (req, res) => {
     } catch (err) {
         res.status(500).send(err.message)
     }
+}
+
+
+transfertstockController.bondexpedition = async (req, res) => {
+    const transfertstock = await Transfertstock.findOne({
+        where: {
+            id: req.params.id
+        },
+        include: [
+            'depart', 'arrivee', {
+                model: Lignetransfert,
+                include: [Produit]
+            }
+        ]
+    })
+    transfertstockService.bondexpedition(transfertstock, res)
+
+}
+
+transfertstockController.bondereception = async (req, res) => {
+    const transfertstock = await Transfertstock.findOne({
+        where: {
+            id: req.params.id
+        },
+        include: [
+            'depart', 'arrivee', {
+                model: Lignetransfert,
+                include: [Produit]
+            }
+        ]
+    })
+
+    console.log(transfertstock)
+    
+    transfertstockService.bondereception(transfertstock, res)
+
 }
 
 
