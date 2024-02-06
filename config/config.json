@@ -17,7 +17,7 @@
     "username": "vkcbkqmm_ubglive",
     "password": "ynz6CtkzBCt9Cjpx",
     "database": "vkcbkqmm_ubglive",
-    "host": "admin.ubg-guinee.com",
+    "host": "localhost",
     "dialect": "mysql"
   } 
 }
