@@ -14,9 +14,9 @@
     "dialect": "mysql"
   },
   "production": {
-    "username": "admin_logiac",
+    "username": "vkcbkqmm_ubglive",
     "password": "ynz6CtkzBCt9Cjpx",
-    "database": "admin_logiac",
+    "database": "vkcbkqmm_ubglive",
     "host": "admin.ubg-guinee.com",
     "dialect": "mysql"
   } 
